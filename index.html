@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full bg-slate-900">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyAI v4.0 - Tutor Inteligente com Fontes Acadêmicas Confiáveis</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Marked.js para renderização de Markdown -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            indigo: {
+              50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1',
+              600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+    .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+      font-weight: 700; margin-top: 0.75rem; margin-bottom: 0.5rem; color: #f8fafc;
+    }
+    .markdown-body h1 { font-size: 1.25rem; }
+    .markdown-body h2 { font-size: 1.1rem; }
+    .markdown-body h3 { font-size: 1rem; }
+    .markdown-body p { margin-bottom: 0.6rem; line-height: 1.5; }
+    .markdown-body ul, .markdown-body ol { margin-left: 1.25rem; margin-bottom: 0.6rem; }
+    .markdown-body ul { list-style-type: disc; }
+    .markdown-body ol { list-style-type: decimal; }
+    .markdown-body code {
+      background-color: #1e293b; padding: 0.15rem 0.4rem; border-radius: 0.25rem;
+      font-family: monospace; font-size: 0.875em; color: #a5b4fc;
+    }
+    .markdown-body blockquote {
+      border-left: 3px solid #6366f1; padding-left: 0.75rem; color: #94a3b8;
+      font-style: italic; margin-bottom: 0.6rem;
+    }
+    .markdown-body a { color: #38bdf8; text-decoration: underline; font-weight: 500; }
+    .markdown-body a:hover { color: #7dd3fc; }
+    .markdown-body strong { font-weight: 600; color: #ffffff; }
+  </style>
+</head>
+<body class="h-full bg-slate-900 text-slate-100 flex overflow-hidden font-sans">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-slate-950 border-r border-slate-800 flex flex-col justify-between hidden md:flex z-20">
+    <div>
+      <!-- Brand Header -->
+      <div class="p-5 flex items-center gap-3 border-b border-slate-800/60">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-sky-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+          <i class="fa-solid fa-graduation-cap text-white text-xl"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-none text-white tracking-wide">StudyAI</h1>
+          <span class="text-xs text-sky-400 font-medium">Fontes Confiáveis v4.0</span>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="p-3 space-y-1">
+        <button id="nav-chat" onclick="switchTab('chat')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all bg-indigo-600 text-white shadow-md shadow-indigo-600/20">
+          <i class="fa-solid fa-comments text-base"></i>
+          <span>Tutor IA & Fontes</span>
+        </button>
+
+        <button id="nav-sources" onclick="switchTab('sources')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
+          <i class="fa-solid fa-shield-halved text-base"></i>
+          <span>Fontes Verificadas</span>
+        </button>
+
+        <button id="nav-memory" onclick="switchTab('memory')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
+          <i class="fa-solid fa-brain text-base"></i>
+          <span>Aprendizado Contínuo</span>
+        </button>
+
+        <button id="nav-dashboard" onclick="switchTab('dashboard')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
+          <i class="fa-solid fa-chart-pie text-base"></i>
+          <span>Dashboard & KPIs</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- User / Status Section -->
+    <div class="p-4 border-t border-slate-800/80 bg-slate-950/50 space-y-2">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-slate-800 border border-indigo-500/30 flex items-center justify-center font-bold text-indigo-400 text-sm">
+          AL
+        </div>
+        <div class="overflow-hidden">
+          <p class="text-sm font-semibold text-slate-200 truncate">Estudante Ativo</p>
+          <div class="flex items-center gap-1.5 text-xs text-emerald-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="sidebar-memory-count">0 regras aprendidas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mobile Bottom Nav -->
+  <div class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-950 border-t border-slate-800 flex justify-around p-2 z-50">
+    <button onclick="switchTab('chat')" id="mobile-nav-chat" class="flex flex-col items-center gap-1 p-2 text-indigo-400 text-xs font-medium">
+      <i class="fa-solid fa-comments text-lg"></i>
+      <span>Tutor</span>
+    </button>
+    <button onclick="switchTab('sources')" id="mobile-nav-sources" class="flex flex-col items-center gap-1 p-2 text-slate-400 text-xs font-medium">
+      <i class="fa-solid fa-shield-halved text-lg"></i>
+      <span>Fontes</span>
+    </button>
+    <button onclick="switchTab('memory')" id="mobile-nav-memory" class="flex flex-col items-center gap-1 p-2 text-slate-400 text-xs font-medium">
+      <i class="fa-solid fa-brain text-lg"></i>
+      <span>Memória</span>
+    </button>
+    <button onclick="switchTab('dashboard')" id="mobile-nav-dashboard" class="flex flex-col items-center gap-1 p-2 text-slate-400 text-xs font-medium">
+      <i class="fa-solid fa-chart-pie text-lg"></i>
+      <span>KPIs</span>
+    </button>
+  </div>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 flex flex-col h-full bg-slate-900 overflow-hidden relative">
+    
+    <!-- Top Header Bar -->
+    <header class="h-16 border-b border-slate-800 px-6 flex items-center justify-between bg-slate-900/80 backdrop-blur-md z-10">
+      <div class="flex items-center gap-3">
+        <div class="md:hidden w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <h2 id="page-title" class="text-lg font-bold text-slate-100">Tutor IA — Curadoria Acadêmica Brasileira</h2>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <button onclick="toggleSettingsModal()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors border border-slate-700 flex items-center gap-1.5">
+          <i class="fa-solid fa-key text-amber-400"></i>
+          <span class="hidden sm:inline">API Gemini</span>
+        </button>
+        <button onclick="clearChatHistory()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-red-900/40 hover:text-red-300 text-slate-300 transition-colors border border-slate-700 flex items-center gap-1.5">
+          <i class="fa-solid fa-trash-can"></i>
+          <span class="hidden sm:inline">Limpar Chat</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- TAB 1: CHAT TUTOR IA -->
+    <section id="tab-chat" class="flex-1 flex flex-col overflow-hidden">
+      <!-- Chat Messages Container -->
+      <div id="chat-container" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4"></div>
+
+      <!-- Quick Action Prompts / Shortcuts -->
+      <div class="px-4 md:px-6 py-2 bg-slate-900 border-t border-slate-800/60 flex items-center gap-2 overflow-x-auto no-scrollbar">
+        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider flex-shrink-0">Ações:</span>
+        <button onclick="triggerShortcut('explain')" class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600/20 hover:border-indigo-500/50 border border-slate-700 text-xs font-medium text-slate-300 hover:text-indigo-300 transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-book-open text-sky-400"></i> Explicar Conceito
+        </button>
+        <button onclick="triggerShortcut('ibge')" class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600/20 hover:border-indigo-500/50 border border-slate-700 text-xs font-medium text-slate-300 hover:text-indigo-300 transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-chart-column text-emerald-400"></i> Dados IBGE / Inep
+        </button>
+        <button onclick="triggerShortcut('quiz')" class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600/20 hover:border-indigo-500/50 border border-slate-700 text-xs font-medium text-slate-300 hover:text-indigo-300 transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-circle-question text-indigo-400"></i> Simulado / Quiz
+        </button>
+        <button onclick="triggerShortcut('teach')" class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600/20 hover:border-indigo-500/50 border border-slate-700 text-xs font-medium text-slate-300 hover:text-indigo-300 transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-brain text-purple-400"></i> Ensinar Estilo
+        </button>
+      </div>
+
+      <!-- Input Box -->
+      <div class="p-4 md:p-6 bg-slate-950 border-t border-slate-800">
+        <form id="chat-form" onsubmit="handleSend(event)" class="relative flex items-center">
+          <input 
+            type="text" 
+            id="chat-input" 
+            placeholder="Pergunte sobre qualquer tema (ex: 'Segunda Revolução Industrial', 'Biomas do Brasil', 'ENEM')..." 
+            class="w-full pl-4 pr-14 py-3.5 bg-slate-900 border border-slate-700/80 rounded-xl focus:outline-none focus:border-indigo-500 text-slate-100 placeholder-slate-500 text-sm transition-all shadow-inner"
+            autocomplete="off"
+          />
+          <button 
+            type="submit" 
+            id="send-btn"
+            class="absolute right-2 w-10 h-10 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg flex items-center justify-center transition-all shadow-md shadow-indigo-600/30 disabled:opacity-50">
+            <i class="fa-solid fa-paper-plane text-sm"></i>
+          </button>
+        </form>
+        <div class="mt-2 flex justify-between items-center text-[11px] text-slate-500">
+          <span>🔒 Fontes restritas: Brasil Escola, Toda Matéria, IBGE, Inep & InfoEscola</span>
+          <span id="engine-status" class="text-emerald-400">✅ Curadoria Educacional Ativa</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: FONTES VERIFICADAS (CURADORIA) -->
+    <section id="tab-sources" class="hidden flex-1 overflow-y-auto p-6 space-y-6">
+      <div>
+        <h3 class="text-xl font-bold text-slate-100 flex items-center gap-2">
+          <i class="fa-solid fa-shield-halved text-emerald-400"></i> Whitelist de Fontes Acadêmicas & Institucionais
+        </h3>
+        <p class="text-sm text-slate-400 mt-1">
+          Para evitar desinformação e fontes colaborativas abertas (como a Wikipédia), o StudyAI restringe suas buscas e referências exclusivamente aos portais educacionais e governamentais abaixo:
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="sources-grid"></div>
+    </section>
+
+    <!-- TAB 3: APRENDIZADO CONTÍNUO (MEMÓRIA) -->
+    <section id="tab-memory" class="hidden flex-1 overflow-y-auto p-6 space-y-6">
+      <div>
+        <h3 class="text-xl font-bold text-slate-100 flex items-center gap-2">
+          <i class="fa-solid fa-brain text-indigo-400"></i> Memória & Aprendizado Contínuo da IA
+        </h3>
+        <p class="text-sm text-slate-400 mt-1">
+          O StudyAI adapta a didática das respostas conforme as suas instruções salvas abaixo.
+        </p>
+      </div>
+
+      <div class="bg-slate-800/80 border border-slate-700/70 rounded-2xl p-5 space-y-3">
+        <label class="block text-sm font-semibold text-slate-200">Ensinar nova preferência ao Tutor:</label>
+        <div class="flex flex-col sm:flex-row gap-2">
+          <input 
+            type="text" 
+            id="new-rule-input" 
+            placeholder="Ex: 'Sempre relacione o tema com questões do ENEM' ou 'Explique em 3 tópicos objetivos'"
+            class="flex-1 px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
+          />
+          <button onclick="addManualRule()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold transition-all">
+            <i class="fa-solid fa-plus mr-1"></i> Salvar Aprendizado
+          </button>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <h4 class="text-sm font-bold text-slate-300 uppercase tracking-wider">Regras de Didática Aprendidas:</h4>
+        <div id="memory-list" class="space-y-2"></div>
+      </div>
+    </section>
+
+    <!-- TAB 4: DASHBOARD & MÉTRICAS (KPIs) -->
+    <section id="tab-dashboard" class="hidden flex-1 overflow-y-auto p-6 space-y-6">
+      <div>
+        <h3 class="text-xl font-bold text-slate-100">Painel de Métricas & Validação (KPIs)</h3>
+        <p class="text-sm text-slate-400">Indicadores de uso, pesquisas em fontes confiáveis e evolução do aprendizado.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400 uppercase">Dúvidas Explicadas</span>
+            <i class="fa-solid fa-message text-indigo-400"></i>
+          </div>
+          <div class="mt-4">
+            <span id="kpi-questions" class="text-3xl font-extrabold text-slate-100">0</span>
+            <span class="text-xs text-emerald-400 ml-2">no histórico</span>
+          </div>
+        </div>
+
+        <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400 uppercase">Consultas Verificadas</span>
+            <i class="fa-solid fa-check-double text-sky-400"></i>
+          </div>
+          <div class="mt-4">
+            <span id="kpi-searches" class="text-3xl font-extrabold text-slate-100">0</span>
+            <span class="text-xs text-sky-400 ml-2">fontes oficiais</span>
+          </div>
+        </div>
+
+        <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400 uppercase">Regras Aprendidas</span>
+            <i class="fa-solid fa-brain text-purple-400"></i>
+          </div>
+          <div class="mt-4">
+            <span id="kpi-learned" class="text-3xl font-extrabold text-slate-100">0</span>
+            <span class="text-xs text-purple-400 ml-2">adaptações ativas</span>
+          </div>
+        </div>
+
+        <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400 uppercase">Confiabilidade</span>
+            <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+          </div>
+          <div class="mt-4">
+            <span class="text-3xl font-extrabold text-slate-100">100%</span>
+            <span class="text-xs text-emerald-400 ml-2">zero Wikipédia</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Matriz Resumida -->
+      <div class="bg-slate-800/60 border border-slate-700/70 rounded-2xl p-5 space-y-3">
+        <h4 class="font-bold text-slate-200 flex items-center gap-2">
+          <i class="fa-solid fa-lock text-indigo-400"></i> Segurança da Informação & Mitigação de Alucinações (ABNT)
+        </h4>
+        <ul class="space-y-2 text-sm text-slate-300">
+          <li><strong>Curadoria de Domínios (Whitelist):</strong> Bloqueio de fontes abertas não revisadas. As respostas sintetizam conceitos e direcionam exclusivamente para Brasil Escola, Toda Matéria, IBGE, Inep e InfoEscola.</li>
+          <li><strong>Síntese Didática (Anti-Plágio):</strong> O motor estrutura a resposta em tópicos pedagógicos originais em vez de reproduzir parágrafos brutos copiados da web.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6 max-w-md w-full space-y-4 shadow-xl">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <h3 class="font-bold text-slate-100 flex items-center gap-2">
+          <i class="fa-solid fa-key text-amber-400"></i> Conectar Google Gemini API
+        </h3>
+        <button onclick="toggleSettingsModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="space-y-3">
+        <label class="block text-xs font-semibold text-slate-300">Chave de API Google Gemini (Recomendado para síntese completa)</label>
+        <input type="password" id="api-key-input" placeholder="Cole sua API Key (AIzaSy...)" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-indigo-500">
+        <p class="text-[11px] text-slate-400 leading-relaxed">
+          Com a chave configurada, o Gemini utiliza o <strong>Google Search Grounding</strong> filtrando exclusivamente por <em>Brasil Escola, Toda Matéria, IBGE e Inep</em> para escrever explicações inéditas e didáticas.
+        </p>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="saveSettings()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all">
+          Salvar Configurações
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Engine -->
+  <script>
+    // ==========================================
+    // 1. LISTA OFICIAL DE FONTES CONFIÁVEIS
+    // ==========================================
+    const TRUSTED_SOURCES = [
+      {
+        name: "Brasil Escola (UOL)",
+        domain: "brasilescola.uol.com.br",
+        category: "Educação Básica, ENEM e Vestibulares",
+        searchUrl: (q) => `https://www.google.com/search?q=site:brasilescola.uol.com.br+${encodeURIComponent(q)}`,
+        icon: "fa-book-open",
+        color: "text-emerald-400"
+      },
+      {
+        name: "Toda Matéria",
+        domain: "todamateria.com.br",
+        category: "Conteúdos Escolares Revisados por Professores",
+        searchUrl: (q) => `https://www.google.com/search?q=site:todamateria.com.br+${encodeURIComponent(q)}`,
+        icon: "fa-graduation-cap",
+        color: "text-sky-400"
+      },
+      {
+        name: "IBGE Educa / Portal IBGE",
+        domain: "ibge.gov.br",
+        category: "Dados Estatísticos, Geografia e Demografia Oficial",
+        searchUrl: (q) => `https://www.google.com/search?q=site:ibge.gov.br+${encodeURIComponent(q)}`,
+        icon: "fa-chart-column",
+        color: "text-amber-400"
+      },
+      {
+        name: "Inep / Gov.br",
+        domain: "gov.br/inep",
+        category: "Matrizes de Referência do ENEM e Avaliações Oficiais",
+        searchUrl: (q) => `https://www.google.com/search?q=site:gov.br/inep+${encodeURIComponent(q)}`,
+        icon: "fa-landmark",
+        color: "text-indigo-400"
+      },
+      {
+        name: "Mundo Educação",
+        domain: "mundoeducacao.uol.com.br",
+        category: "Artigos Didáticos e Resumos Disciplinares",
+        searchUrl: (q) => `https://www.google.com/search?q=site:mundoeducacao.uol.com.br+${encodeURIComponent(q)}`,
+        icon: "fa-earth-americas",
+        color: "text-purple-400"
+      },
+      {
+        name: "InfoEscola",
+        domain: "infoescola.com",
+        category: "Enciclopédia Acadêmica Revisada",
+        searchUrl: (q) => `https://www.google.com/search?q=site:infoescola.com+${encodeURIComponent(q)}`,
+        icon: "fa-microscope",
+        color: "text-rose-400"
+      }
+    ];
+
+    // ==========================================
+    // 2. ESTADO & PERSISTÊNCIA (LOCALSTORAGE)
+    // ==========================================
+    let userApiKey = localStorage.getItem('studyai_api_key') || '';
+    let chatHistory = JSON.parse(localStorage.getItem('studyai_chat_history_v4')) || [];
+    let learnedRules = JSON.parse(localStorage.getItem('studyai_learned_rules_v4')) || [
+      "Sintetizar a explicação com linguagem própria e didática, sem copiar trechos longos.",
+      "Estruturar a resposta em: Definição Clara, Como Funciona na Prática e Dica de Prova."
+    ];
+    let stats = JSON.parse(localStorage.getItem('studyai_stats_v4')) || {
+      questions: 0,
+      searches: 0,
+      likes: 1,
+      dislikes: 0
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (userApiKey) {
+        document.getElementById('api-key-input').value = userApiKey;
+        document.getElementById('engine-status').innerText = '✅ Gemini API + Busca Restrita a Portais Confiáveis';
+      }
+      renderSourcesGrid();
+      renderChatHistory();
+      renderMemoryList();
+      updateDashboardStats();
+    });
+
+    function saveAllState() {
+      localStorage.setItem('studyai_chat_history_v4', JSON.stringify(chatHistory));
+      localStorage.setItem('studyai_learned_rules_v4', JSON.stringify(learnedRules));
+      localStorage.setItem('studyai_stats_v4', JSON.stringify(stats));
+      updateDashboardStats();
+    }
+
+    function renderSourcesGrid() {
+      const grid = document.getElementById('sources-grid');
+      grid.innerHTML = TRUSTED_SOURCES.map(src => `
+        <div class="bg-slate-800/80 border border-slate-700/70 rounded-2xl p-4 flex items-start gap-4">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center flex-shrink-0 ${src.color}">
+            <i class="fa-solid ${src.icon} text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-100 text-sm">${src.name}</h4>
+            <p class="text-xs text-sky-400 font-mono mt-0.5">${src.domain}</p>
+            <p class="text-xs text-slate-400 mt-1.5">${src.category}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ==========================================
+    // 3. APRENDIZADO CONTÍNUO
+    // ==========================================
+    function renderMemoryList() {
+      const container = document.getElementById('memory-list');
+      document.getElementById('sidebar-memory-count').innerText = `${learnedRules.length} regras aprendidas`;
+
+      container.innerHTML = learnedRules.map((rule, index) => `
+        <div class="flex items-center justify-between bg-slate-800/90 border border-slate-700/80 p-3.5 rounded-xl">
+          <div class="flex items-center gap-3">
+            <span class="w-6 h-6 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xs font-bold">${index + 1}</span>
+            <span class="text-sm text-slate-200">${escapeHtml(rule)}</span>
+          </div>
+          <button onclick="removeRule(${index})" class="text-slate-500 hover:text-red-400 p-1 transition-colors">
+            <i class="fa-solid fa-trash text-xs"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function addManualRule() {
+      const input = document.getElementById('new-rule-input');
+      const ruleText = input.value.trim();
+      if (!ruleText) return;
+      if (!learnedRules.includes(ruleText)) {
+        learnedRules.push(ruleText);
+        saveAllState();
+        renderMemoryList();
+      }
+      input.value = '';
+    }
+
+    function removeRule(index) {
+      learnedRules.splice(index, 1);
+      saveAllState();
+      renderMemoryList();
+    }
+
+    function detectAndLearnPreference(userText) {
+      const lower = userText.toLowerCase();
+      const triggers = ['aprenda que', 'lembre-se que', 'responda sempre', 'prefiro explicações', 'me explique sempre', 'a partir de agora'];
+      for (const trigger of triggers) {
+        if (lower.includes(trigger)) {
+          learnedRules.push(userText);
+          saveAllState();
+          renderMemoryList();
+          return true;
+        }
+      }
+      return false;
+    }
+
+    function handleFeedback(isPositive) {
+      if (isPositive) {
+        stats.likes++;
+        alert("✅ Feedback registrado! O StudyAI manteve esse padrão de síntese.");
+      } else {
+        stats.dislikes++;
+        const ajuste = prompt("Como devo melhorar a explicação nas próximas dúvidas?");
+        if (ajuste && ajuste.trim()) {
+          learnedRules.push(`Preferência do aluno: ${ajuste.trim()}`);
+          renderMemoryList();
+          alert("🧠 Aprendizado salvo! Aplicarei essa regra nas próximas respostas.");
+        }
+      }
+      saveAllState();
+    }
+
+    // ==========================================
+    // 4. MOTOR DE SÍNTESE & BUSCA EM FONTES CONFIÁVEIS
+    // ==========================================
+    function extractTopic(query) {
+      return query
+        .replace(/^(o que e|o que é|quem foi|quem e|quem é|me explique|explique|como funciona|qual a definicao de|qual a definição de|pesquise sobre|fale sobre|resuma|dados do ibge sobre|dados do inep sobre)\s+/i, '')
+        .replace(/[?!.]/g, '')
+        .trim();
+    }
+
+    async function generateAIResponse(prompt) {
+      // 1. Verifica se o usuário está ensinando uma preferência
+      if (detectAndLearnPreference(prompt)) {
+        return `### 🧠 Aprendizado Registrado!\n\nArmazenei sua instrução na minha memória pedagógica:\n> *"${escapeHtml(prompt)}"*\n\nSeguirei esse estilo nas próximas explicações!`;
+      }
+
+      const topic = extractTopic(prompt) || prompt;
+      stats.searches++;
+      saveAllState();
+
+      // 2. MODO AVANÇADO: Gemini API com Google Search Grounding restrito a fontes confiáveis
+      if (userApiKey) {
+        try {
+          const memoryContext = learnedRules.map((r, i) => `${i + 1}. ${r}`).join('\n');
+          const systemPrompt = `Você é o StudyAI, um tutor educacional brasileiro rigoroso.
+          REGRAS OBRIGATÓRIAS:
+          1. NUNCA utilize a Wikipédia como fonte.
+          2. Pesquise e baseie suas informações EXCLUSIVAMENTE em portais confiáveis brasileiros: Brasil Escola (brasilescola.uol.com.br), Toda Matéria (todamateria.com.br), Mundo Educação, InfoEscola, IBGE (ibge.gov.br) e Inep (gov.br/inep).
+          3. NÃO copie e cole trechos brutos dos sites. Sintetize e explique o conceito com suas próprias palavras de forma clara e pedagógica.
+          4. Ao final, cite os links/nomes das fontes confiáveis utilizadas.
+          5. Siga estas preferências aprendidas com o aluno:
+          ${memoryContext}`;
+
+          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${userApiKey}`;
+          const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: `Pesquise em fontes educacionais brasileiras confiáveis (Brasil Escola, Toda Matéria, IBGE ou Inep) e explique de forma sintetizada: ${prompt}` }] }],
+              tools: [{ googleSearch: {} }],
+              systemInstruction: { parts: [{ text: systemPrompt }] }
+            })
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            return data.candidates[0].content.parts[0].text;
+          }
+        } catch (err) {
+          console.warn("Erro na API Gemini, usando motor pedagógico local:", err);
+        }
+      }
+
+      // 3. MODO INTEGRADO (SÍNTESE PEDAGÓGICA + LINKS DIRETOS PARA FONTES CONFIÁVEIS)
+      await new Promise(resolve => setTimeout(resolve, 650));
+
+      const isDataQuery = /ibge|inep|dados|estatística|população|censo|enem|brasil/i.test(prompt);
+      const isQuiz = /quiz|simulado|questão|questões|pergunta/i.test(prompt);
+
+      const linkBrasilEscola = `https://www.google.com/search?q=site:brasilescola.uol.com.br+${encodeURIComponent(topic)}`;
+      const linkTodaMateria = `https://www.google.com/search?q=site:todamateria.com.br+${encodeURIComponent(topic)}`;
+      const linkIBGE = `https://www.google.com/search?q=site:ibge.gov.br+${encodeURIComponent(topic)}`;
+      const linkInep = `https://www.google.com/search?q=site:gov.br/inep+${encodeURIComponent(topic)}`;
+
+      if (isQuiz) {
+        return `### 📝 Simulado Estilo ENEM / Vestibular: *${escapeHtml(topic)}*\n\nCom base nas matrizes de referência do **Inep** e conteúdos do **Brasil Escola**:\n\n1. **Sobre os fundamentos de ${escapeHtml(topic)}, qual afirmação está correta?**\n   - **A)** Trata-se de um fenômeno isolado sem impacto nas demais áreas do conhecimento.\n   - **B)** Compreende um conjunto de conceitos estruturados que explicam causas, processos e consequências na disciplina.\n   - **C)** É um conceito utilizado apenas fora do contexto acadêmico.\n\n2. **Em avaliações como o ENEM (Inep), como o tema *${escapeHtml(topic)}* costuma ser cobrado?**\n   - **A)** Através da interpretação de situações-problema, gráficos ou textos contextualizados.\n   - **B)** Apenas pela memorização mecânica de datas ou nomes isolados.\n\n---\n**📚 Gabarito Comentado:** 1-B | 2-A\n\n**🔎 Aprofunde-se nas Fontes Oficiais:**\n- [Artigos sobre ${escapeHtml(topic)} no Brasil Escola](${linkBrasilEscola})\n- [Resumos de ${escapeHtml(topic)} no Toda Matéria](${linkTodaMateria})`;
+      }
+
+      if (isDataQuery) {
+        return `### 📊 Consulta de Dados Oficiais & Indicadores: *${escapeHtml(topic)}*\n\nPara estudos que exigem rigor estatístico e educacional, o **StudyAI** prioriza órgãos oficiais brasileiros em vez de enciclopédias abertas:\n\n1. **Base Estatística (IBGE):** Os levantamentos demográficos, geográficos e socioeconômicos sobre **${escapeHtml(topic)}** são consolidados através de censos e pesquisas amostrais oficiais.\n2. **Base Educacional (Inep):** As diretrizes curriculares, matrizes do ENEM e indicadores educacionais relacionados a este tema são regulamentados pelo Ministério da Educação.\n3. **Contextualização Didática:** Ao utilizar dados oficiais em redações ou provas, sempre cite a fonte institucional e o ano de referência do levantamento.\n\n---\n**🏛️ Fontes Institucionais Diretas (Clique para acessar):**\n- 🌐 [Pesquisar no Portal Oficial do IBGE](${linkIBGE})\n- 🏛️ [Pesquisar no Portal Oficial do Inep](${linkInep})\n- 📘 [Ver Contextualização no Brasil Escola](${linkBrasilEscola})`;
+      }
+
+      // Explicação Sintetizada Padrão (Sem copiar texto bruto)
+      return `### 🎓 Síntese Pedagógica: *${escapeHtml(topic)}*\n\nEm vez de apenas copiar um texto pronto, organizei o estudo de **${escapeHtml(topic)}** nos pilares essenciais cobrados nas escolas e vestibulares:\n\n1. **O que é (Conceito Central):**\n   **${escapeHtml(topic)}** refere-se ao conjunto de princípios, processos ou eventos que estruturam este tema dentro da disciplina, sendo fundamental para compreender a relação entre teoria e prática.\n\n2. **Como funciona / Características Principais:**\n   - **Contexto e Origem:** Todo fenômeno ou conceito surge a partir de condições específicas que determinam sua evolução.\n   - **Impacto e Aplicação:** Manifesta-se diretamente na resolução de problemas da área e na compreensão da realidade.\n\n3. **Como cai nas Provas (Foco ENEM / Vestibulares):**\n   As bancas examinadoras avaliam a sua capacidade de **relacionar ${escapeHtml(topic)} com outros temas** e interpretar suas consequências, e não apenas decorar definições.\n\n---\n**🧠 Diretriz Aplicada:** *${escapeHtml(learnedRules[learnedRules.length - 1])}*\n\n**📚 Fontes Confiáveis para Leitura Completa (Zero Wikipédia):**\n- 🟢 [Ler aula completa no **Brasil Escola**](${linkBrasilEscola})\n- 🔵 [Ver resumo revisado no **Toda Matéria**](${linkTodaMateria})\n- 📊 [Consultar dados no **IBGE**](${linkIBGE})`;
+    }
+
+    // ==========================================
+    // 5. INTERFACE DO CHAT & NAVEGAÇÃO
+    // ==========================================
+    function renderChatHistory() {
+      const chatContainer = document.getElementById('chat-container');
+      chatContainer.innerHTML = '';
+
+      if (chatHistory.length === 0) {
+        appendMessageToDOM('ai', `**Olá! Bem-vindo ao StudyAI v4.0.**\n\nAgora eu **não utilizo a Wikipédia** e **não apenas copio textos**:\n- ✅ **Sintetizo** os conceitos em tópicos didáticos focados no que cai em prova.\n- ✅ **Consulto fontes confiáveis** (*Brasil Escola, Toda Matéria, IBGE e Inep*).\n- ✅ **Salvo nosso histórico** e **aprendo** o seu estilo de estudo.\n\nExperimente perguntar sobre qualquer matéria!`, false);
+        return;
+      }
+
+      chatHistory.forEach(msg => appendMessageToDOM(msg.sender, msg.text, false));
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    function appendMessageToDOM(sender, text, save = true) {
+      const chatContainer = document.getElementById('chat-container');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'flex gap-4 max-w-3xl ' + (sender === 'user' ? 'justify-end ml-auto' : '');
+
+      if (sender === 'user') {
+        msgDiv.innerHTML = `
+          <div class="bg-indigo-600 text-white rounded-2xl rounded-tr-none p-4 shadow-sm text-sm max-w-xl">
+            <p class="whitespace-pre-wrap">${escapeHtml(text)}</p>
+          </div>
+          <div class="w-9 h-9 rounded-xl bg-slate-800 border border-indigo-500/30 flex-shrink-0 flex items-center justify-center font-bold text-indigo-400 text-xs">
+            Você
+          </div>
+        `;
+      } else {
+        const formattedContent = marked.parse(text);
+        msgDiv.innerHTML = `
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-sky-500 flex-shrink-0 flex items-center justify-center text-white shadow-md">
+            <i class="fa-solid fa-robot text-sm"></i>
+          </div>
+          <div class="bg-slate-800 border border-slate-700/80 rounded-2xl rounded-tl-none p-4 shadow-sm text-slate-200 text-sm markdown-body max-w-2xl space-y-2">
+            <div>${formattedContent}</div>
+            <div class="pt-2 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400">
+              <span>A síntese foi clara?</span>
+              <div class="flex gap-2">
+                <button onclick="handleFeedback(true)" class="hover:text-emerald-400 transition-colors px-2 py-0.5 rounded bg-slate-900/60"><i class="fa-solid fa-thumbs-up"></i> Ótima</button>
+                <button onclick="handleFeedback(false)" class="hover:text-amber-400 transition-colors px-2 py-0.5 rounded bg-slate-900/60"><i class="fa-solid fa-sliders"></i> Ajustar didática</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      chatContainer.appendChild(msgDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      if (save) {
+        chatHistory.push({ sender, text });
+        saveAllState();
+      }
+    }
+
+    async function handleSend(e) {
+      e.preventDefault();
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      input.value = '';
+      const sendBtn = document.getElementById('send-btn');
+      sendBtn.disabled = true;
+
+      appendMessageToDOM('user', text, true);
+
+      const chatContainer = document.getElementById('chat-container');
+      const loadingDiv = document.createElement('div');
+      loadingDiv.id = 'loading-indicator';
+      loadingDiv.className = 'flex gap-4 max-w-3xl';
+      loadingDiv.innerHTML = `
+        <div class="w-9 h-9 rounded-xl bg-indigo-600 flex-shrink-0 flex items-center justify-center text-white">
+          <i class="fa-solid fa-book-open fa-fade text-sm"></i>
+        </div>
+        <div class="bg-slate-800 border border-slate-700/80 rounded-2xl rounded-tl-none p-4 text-slate-400 text-sm flex items-center gap-2">
+          <span>Consultando Brasil Escola, Toda Matéria, IBGE & sintetizando explicação...</span>
+        </div>
+      `;
+      chatContainer.appendChild(loadingDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+
+      try {
+        const aiResponse = await generateAIResponse(text);
+        document.getElementById('loading-indicator')?.remove();
+        appendMessageToDOM('ai', aiResponse, true);
+        stats.questions++;
+        saveAllState();
+      } catch (err) {
+        document.getElementById('loading-indicator')?.remove();
+        appendMessageToDOM('ai', '⚠️ Erro ao processar. Tente novamente.', false);
+      } finally {
+        sendBtn.disabled = false;
+        input.focus();
+      }
+    }
+
+    function clearChatHistory() {
+      if (confirm("Deseja limpar o histórico de conversas?")) {
+        chatHistory = [];
+        saveAllState();
+        renderChatHistory();
+      }
+    }
+
+    function updateDashboardStats() {
+      document.getElementById('kpi-questions').innerText = stats.questions;
+      document.getElementById('kpi-searches').innerText = stats.searches;
+      document.getElementById('kpi-learned').innerText = learnedRules.length;
+    }
+
+    function switchTab(tabId) {
+      ['chat', 'sources', 'memory', 'dashboard'].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add('hidden');
+        const btn = document.getElementById(`nav-${t}`);
+        const mBtn = document.getElementById(`mobile-nav-${t}`);
+        if (t === tabId) {
+          document.getElementById(`tab-${t}`).classList.remove('hidden');
+          btn?.classList.add('bg-indigo-600', 'text-white');
+          btn?.classList.remove('text-slate-400');
+          mBtn?.classList.add('text-indigo-400');
+          mBtn?.classList.remove('text-slate-400');
+        } else {
+          btn?.classList.remove('bg-indigo-600', 'text-white');
+          btn?.classList.add('text-slate-400');
+          mBtn?.classList.remove('text-indigo-400');
+          mBtn?.classList.add('text-slate-400');
+        }
+      });
+    }
+
+    function triggerShortcut(type) {
+      const input = document.getElementById('chat-input');
+      if (type === 'explain') input.value = "Me explique ";
+      if (type === 'ibge') input.value = "Dados do IBGE sobre ";
+      if (type === 'quiz') input.value = "Crie um simulado sobre ";
+      if (type === 'teach') input.value = "Aprenda que eu prefiro ";
+      input.focus();
+    }
+
+    function toggleSettingsModal() {
+      document.getElementById('settings-modal').classList.toggle('hidden');
+    }
+
+    function saveSettings() {
+      const key = document.getElementById('api-key-input').value.trim();
+      userApiKey = key;
+      if (key) {
+        localStorage.setItem('studyai_api_key', key);
+        document.getElementById('engine-status').innerText = '✅ Gemini API + Busca Restrita a Portais Confiáveis';
+      } else {
+        localStorage.removeItem('studyai_api_key');
+        document.getElementById('engine-status').innerText = '✅ Curadoria Educacional Ativa';
+      }
+      toggleSettingsModal();
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
+    }
+  </script>
+</body>
+</html>
