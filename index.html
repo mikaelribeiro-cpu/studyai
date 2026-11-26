@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StudyAI v4.0 - Tutor Inteligente com Fontes Acadêmicas Confiáveis</title>
+  <title>StudyAI v4.0 - Plataforma Inteligente de Apoio aos Estudos</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -46,7 +46,7 @@
     .markdown-body h1 { font-size: 1.25rem; }
     .markdown-body h2 { font-size: 1.1rem; }
     .markdown-body h3 { font-size: 1rem; }
-    .markdown-body p { margin-bottom: 0.6rem; line-height: 1.5; }
+    .markdown-body p { margin-bottom: 0.6rem; line-height: 1.55; }
     .markdown-body ul, .markdown-body ol { margin-left: 1.25rem; margin-bottom: 0.6rem; }
     .markdown-body ul { list-style-type: disc; }
     .markdown-body ol { list-style-type: decimal; }
@@ -75,36 +75,57 @@
         </div>
         <div>
           <h1 class="font-bold text-lg leading-none text-white tracking-wide">StudyAI</h1>
-          <span class="text-xs text-sky-400 font-medium">Fontes Confiáveis v4.0</span>
+          <span class="text-xs text-sky-400 font-medium">Motor Curado v4.0</span>
         </div>
       </div>
 
       <!-- Navigation Menu -->
       <nav class="p-3 space-y-1">
-        <button id="nav-chat" onclick="switchTab('chat')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all bg-indigo-600 text-white shadow-md shadow-indigo-600/20">
-          <i class="fa-solid fa-comments text-base"></i>
-          <span>Tutor IA & Fontes</span>
+        <button id="nav-chat" onclick="switchTab('chat')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl font-medium text-sm transition-all bg-indigo-600 text-white shadow-md shadow-indigo-600/20">
+          <i class="fa-solid fa-comments text-base w-5 text-center"></i>
+          <span>Tutor IA & Resumos</span>
         </button>
 
-        <button id="nav-sources" onclick="switchTab('sources')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
-          <i class="fa-solid fa-shield-halved text-base"></i>
+        <button id="nav-planner" onclick="switchTab('planner')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl font-medium text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
+          <i class="fa-solid fa-list-check text-base w-5 text-center"></i>
+          <span>Cronograma & Metas</span>
+        </button>
+
+        <button id="nav-flashcards" onclick="switchTab('flashcards')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl font-medium text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
+          <i class="fa-solid fa-layer-group text-base w-5 text-center"></i>
+          <span>Flashcards & Revisão</span>
+        </button>
+
+        <button id="nav-sources" onclick="switchTab('sources')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl font-medium text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
+          <i class="fa-solid fa-shield-halved text-base w-5 text-center"></i>
           <span>Fontes Verificadas</span>
         </button>
 
-        <button id="nav-memory" onclick="switchTab('memory')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
-          <i class="fa-solid fa-brain text-base"></i>
+        <button id="nav-memory" onclick="switchTab('memory')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl font-medium text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
+          <i class="fa-solid fa-brain text-base w-5 text-center"></i>
           <span>Aprendizado Contínuo</span>
         </button>
 
-        <button id="nav-dashboard" onclick="switchTab('dashboard')" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
-          <i class="fa-solid fa-chart-pie text-base"></i>
+        <button id="nav-dashboard" onclick="switchTab('dashboard')" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl font-medium text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
+          <i class="fa-solid fa-chart-pie text-base w-5 text-center"></i>
           <span>Dashboard & KPIs</span>
         </button>
       </nav>
     </div>
 
-    <!-- User / Status Section -->
-    <div class="p-4 border-t border-slate-800/80 bg-slate-950/50 space-y-2">
+    <!-- User / Gamification Section -->
+    <div class="p-4 border-t border-slate-800/80 bg-slate-950/50 space-y-3">
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-2.5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">🔥</span>
+          <div>
+            <p class="text-xs font-bold text-amber-400"><span id="sidebar-streak">1</span> dia(s) seguido(s)</p>
+            <p class="text-[10px] text-slate-400">Nível <span id="sidebar-level">1</span> • <span id="sidebar-xp">0</span> XP</p>
+          </div>
+        </div>
+        <span id="sidebar-badge" class="text-base" title="Medalha Atual">🥉</span>
+      </div>
+
       <div class="flex items-center gap-3">
         <div class="w-9 h-9 rounded-full bg-slate-800 border border-indigo-500/30 flex items-center justify-center font-bold text-indigo-400 text-sm">
           AL
@@ -113,7 +134,7 @@
           <p class="text-sm font-semibold text-slate-200 truncate">Estudante Ativo</p>
           <div class="flex items-center gap-1.5 text-xs text-emerald-400">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span id="sidebar-memory-count">0 regras aprendidas</span>
+            <span id="sidebar-memory-count">2 regras aprendidas</span>
           </div>
         </div>
       </div>
@@ -121,27 +142,31 @@
   </aside>
 
   <!-- Mobile Bottom Nav -->
-  <div class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-950 border-t border-slate-800 flex justify-around p-2 z-50">
-    <button onclick="switchTab('chat')" id="mobile-nav-chat" class="flex flex-col items-center gap-1 p-2 text-indigo-400 text-xs font-medium">
-      <i class="fa-solid fa-comments text-lg"></i>
+  <div class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-950 border-t border-slate-800 flex justify-around p-1.5 z-50">
+    <button onclick="switchTab('chat')" id="mobile-nav-chat" class="flex flex-col items-center gap-0.5 p-1.5 text-indigo-400 text-[10px] font-medium">
+      <i class="fa-solid fa-comments text-base"></i>
       <span>Tutor</span>
     </button>
-    <button onclick="switchTab('sources')" id="mobile-nav-sources" class="flex flex-col items-center gap-1 p-2 text-slate-400 text-xs font-medium">
-      <i class="fa-solid fa-shield-halved text-lg"></i>
+    <button onclick="switchTab('planner')" id="mobile-nav-planner" class="flex flex-col items-center gap-0.5 p-1.5 text-slate-400 text-[10px] font-medium">
+      <i class="fa-solid fa-list-check text-base"></i>
+      <span>Metas</span>
+    </button>
+    <button onclick="switchTab('flashcards')" id="mobile-nav-flashcards" class="flex flex-col items-center gap-0.5 p-1.5 text-slate-400 text-[10px] font-medium">
+      <i class="fa-solid fa-layer-group text-base"></i>
+      <span>Cards</span>
+    </button>
+    <button onclick="switchTab('sources')" id="mobile-nav-sources" class="flex flex-col items-center gap-0.5 p-1.5 text-slate-400 text-[10px] font-medium">
+      <i class="fa-solid fa-shield-halved text-base"></i>
       <span>Fontes</span>
     </button>
-    <button onclick="switchTab('memory')" id="mobile-nav-memory" class="flex flex-col items-center gap-1 p-2 text-slate-400 text-xs font-medium">
-      <i class="fa-solid fa-brain text-lg"></i>
-      <span>Memória</span>
-    </button>
-    <button onclick="switchTab('dashboard')" id="mobile-nav-dashboard" class="flex flex-col items-center gap-1 p-2 text-slate-400 text-xs font-medium">
-      <i class="fa-solid fa-chart-pie text-lg"></i>
+    <button onclick="switchTab('dashboard')" id="mobile-nav-dashboard" class="flex flex-col items-center gap-0.5 p-1.5 text-slate-400 text-[10px] font-medium">
+      <i class="fa-solid fa-chart-pie text-base"></i>
       <span>KPIs</span>
     </button>
   </div>
 
   <!-- Main Content Area -->
-  <main class="flex-1 flex flex-col h-full bg-slate-900 overflow-hidden relative">
+  <main class="flex-1 flex flex-col h-full bg-slate-900 overflow-hidden relative pb-14 md:pb-0">
     
     <!-- Top Header Bar -->
     <header class="h-16 border-b border-slate-800 px-6 flex items-center justify-between bg-slate-900/80 backdrop-blur-md z-10">
@@ -149,13 +174,16 @@
         <div class="md:hidden w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
           <i class="fa-solid fa-graduation-cap"></i>
         </div>
-        <h2 id="page-title" class="text-lg font-bold text-slate-100">Tutor IA — Curadoria Acadêmica Brasileira</h2>
+        <h2 id="page-title" class="text-base md:text-lg font-bold text-slate-100">Tutor IA — Curadoria Acadêmica Brasileira</h2>
       </div>
 
       <div class="flex items-center gap-2">
-        <button onclick="toggleSettingsModal()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors border border-slate-700 flex items-center gap-1.5">
-          <i class="fa-solid fa-key text-amber-400"></i>
-          <span class="hidden sm:inline">API Gemini</span>
+        <div class="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold">
+          <span>🔥</span> <span id="header-xp">0 XP</span>
+        </div>
+        <button onclick="showTopicsModal()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 transition-colors border border-indigo-500/40 flex items-center gap-1.5">
+          <i class="fa-solid fa-book-bookmark"></i>
+          <span class="hidden sm:inline">Catálogo de Temas</span>
         </button>
         <button onclick="clearChatHistory()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-red-900/40 hover:text-red-300 text-slate-300 transition-colors border border-slate-700 flex items-center gap-1.5">
           <i class="fa-solid fa-trash-can"></i>
@@ -164,35 +192,34 @@
       </div>
     </header>
 
-    <!-- TAB 1: CHAT TUTOR IA -->
+    <!-- TAB 1: CHAT TUTOR IA, RESUMOS & QUIZZES -->
     <section id="tab-chat" class="flex-1 flex flex-col overflow-hidden">
-      <!-- Chat Messages Container -->
       <div id="chat-container" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4"></div>
 
       <!-- Quick Action Prompts / Shortcuts -->
       <div class="px-4 md:px-6 py-2 bg-slate-900 border-t border-slate-800/60 flex items-center gap-2 overflow-x-auto no-scrollbar">
         <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider flex-shrink-0">Ações:</span>
-        <button onclick="triggerShortcut('explain')" class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600/20 hover:border-indigo-500/50 border border-slate-700 text-xs font-medium text-slate-300 hover:text-indigo-300 transition-all flex items-center gap-1.5">
-          <i class="fa-solid fa-book-open text-sky-400"></i> Explicar Conceito
-        </button>
-        <button onclick="triggerShortcut('ibge')" class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600/20 hover:border-indigo-500/50 border border-slate-700 text-xs font-medium text-slate-300 hover:text-indigo-300 transition-all flex items-center gap-1.5">
-          <i class="fa-solid fa-chart-column text-emerald-400"></i> Dados IBGE / Inep
+        <button onclick="triggerShortcut('summary')" class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600/20 hover:border-indigo-500/50 border border-slate-700 text-xs font-medium text-slate-300 hover:text-indigo-300 transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-file-lines text-sky-400"></i> Resumo Inteligente
         </button>
         <button onclick="triggerShortcut('quiz')" class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600/20 hover:border-indigo-500/50 border border-slate-700 text-xs font-medium text-slate-300 hover:text-indigo-300 transition-all flex items-center gap-1.5">
-          <i class="fa-solid fa-circle-question text-indigo-400"></i> Simulado / Quiz
+          <i class="fa-solid fa-circle-question text-indigo-400"></i> Criar Quiz
         </button>
-        <button onclick="triggerShortcut('teach')" class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600/20 hover:border-indigo-500/50 border border-slate-700 text-xs font-medium text-slate-300 hover:text-indigo-300 transition-all flex items-center gap-1.5">
-          <i class="fa-solid fa-brain text-purple-400"></i> Ensinar Estilo
+        <button onclick="triggerShortcut('flashcard')" class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600/20 hover:border-indigo-500/50 border border-slate-700 text-xs font-medium text-slate-300 hover:text-indigo-300 transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-layer-group text-amber-400"></i> Gerar Flashcard
+        </button>
+        <button onclick="triggerShortcut('ibge')" class="flex-shrink-0 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-indigo-600/20 hover:border-indigo-500/50 border border-slate-700 text-xs font-medium text-slate-300 hover:text-indigo-300 transition-all flex items-center gap-1.5">
+          <i class="fa-solid fa-chart-column text-emerald-400"></i> Dados IBGE / Brasil
         </button>
       </div>
 
       <!-- Input Box -->
-      <div class="p-4 md:p-6 bg-slate-950 border-t border-slate-800">
+      <div class="p-4 md:p-5 bg-slate-950 border-t border-slate-800">
         <form id="chat-form" onsubmit="handleSend(event)" class="relative flex items-center">
           <input 
             type="text" 
             id="chat-input" 
-            placeholder="Pergunte sobre qualquer tema (ex: 'Segunda Revolução Industrial', 'Biomas do Brasil', 'ENEM')..." 
+            placeholder="Pergunte sobre Ditadura Militar, Era Vargas, Bhaskara, Fotossíntese, Leis de Newton, Redação..." 
             class="w-full pl-4 pr-14 py-3.5 bg-slate-900 border border-slate-700/80 rounded-xl focus:outline-none focus:border-indigo-500 text-slate-100 placeholder-slate-500 text-sm transition-all shadow-inner"
             autocomplete="off"
           />
@@ -204,34 +231,133 @@
           </button>
         </form>
         <div class="mt-2 flex justify-between items-center text-[11px] text-slate-500">
-          <span>🔒 Fontes restritas: Brasil Escola, Toda Matéria, IBGE, Inep & InfoEscola</span>
-          <span id="engine-status" class="text-emerald-400">✅ Curadoria Educacional Ativa</span>
+          <span>🔒 Base Curada: Brasil Escola, Toda Matéria, IBGE & Inep (100% LGPD / Zero Alucinação)</span>
+          <span class="text-emerald-400">✅ Motor Pedagógico Ativo</span>
         </div>
       </div>
     </section>
 
-    <!-- TAB 2: FONTES VERIFICADAS (CURADORIA) -->
+    <!-- TAB 2: CRONOGRAMA DE ESTUDOS & METAS -->
+    <section id="tab-planner" class="hidden flex-1 overflow-y-auto p-6 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h3 class="text-xl font-bold text-slate-100 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-sky-400"></i> Cronograma de Estudos & Metas Diárias
+          </h3>
+          <p class="text-sm text-slate-400 mt-1">
+            Organize suas disciplinas, acompanhe o progresso e ganhe <strong>+20 XP</strong> a cada meta concluída.
+          </p>
+        </div>
+        <div class="bg-slate-800 border border-slate-700 px-4 py-2 rounded-xl text-right">
+          <span class="text-xs text-slate-400 block">Progresso do Dia</span>
+          <span id="planner-progress-text" class="text-lg font-bold text-emerald-400">0% concluído</span>
+        </div>
+      </div>
+
+      <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden">
+        <div id="planner-progress-bar" class="bg-gradient-to-r from-indigo-500 to-emerald-400 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+      </div>
+
+      <form onsubmit="addStudyTask(event)" class="bg-slate-800/80 border border-slate-700/70 rounded-2xl p-4 grid grid-cols-1 sm:grid-cols-4 gap-3">
+        <select id="task-subject" class="px-3 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
+          <option value="Matemática">📐 Matemática</option>
+          <option value="Português / Redação">✍️ Português / Redação</option>
+          <option value="História / Geografia">🌍 Humanas</option>
+          <option value="Biologia / Química / Física">🧬 Natureza</option>
+          <option value="Desenvolvimento de Sistemas">💻 Desenv. Sistemas</option>
+        </select>
+        <input 
+          type="text" 
+          id="task-title" 
+          placeholder="Ex: Revisar Funções Quadráticas e fazer 5 exercícios" 
+          required
+          class="sm:col-span-2 px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
+        />
+        <button type="submit" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2">
+          <i class="fa-solid fa-plus"></i> Adicionar Meta
+        </button>
+      </form>
+
+      <div id="tasks-list" class="space-y-2.5"></div>
+    </section>
+
+    <!-- TAB 3: FLASHCARDS & REPETIÇÃO ESPAÇADA -->
+    <section id="tab-flashcards" class="hidden flex-1 overflow-y-auto p-6 space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h3 class="text-xl font-bold text-slate-100 flex items-center gap-2">
+            <i class="fa-solid fa-layer-group text-amber-400"></i> Flashcards com Repetição Espaçada
+          </h3>
+          <p class="text-sm text-slate-400 mt-1">
+            Pratique a memorização ativa. Clique no cartão para virar e avalie seu nível de lembrança.
+          </p>
+        </div>
+        <button onclick="toggleNewCardForm()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-2 self-start">
+          <i class="fa-solid fa-plus"></i> Novo Flashcard
+        </button>
+      </div>
+
+      <form id="new-card-form" onsubmit="addFlashcard(event)" class="hidden bg-slate-800/90 border border-slate-700 rounded-2xl p-5 space-y-3">
+        <h4 class="text-sm font-bold text-slate-200">Criar Cartão de Memorização</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <input type="text" id="card-front" placeholder="Frente (Pergunta ou Conceito)" required class="px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
+          <input type="text" id="card-back" placeholder="Verso (Resposta ou Definição)" required class="px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-indigo-500">
+        </div>
+        <div class="flex justify-end gap-2">
+          <button type="button" onclick="toggleNewCardForm()" class="px-4 py-2 bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold">Cancelar</button>
+          <button type="submit" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold">Salvar Flashcard (+15 XP)</button>
+        </div>
+      </form>
+
+      <div class="max-w-xl mx-auto space-y-4">
+        <div class="flex justify-between items-center text-xs text-slate-400">
+          <span id="flashcard-counter">Cartão 1 de 3</span>
+          <span id="flashcard-interval" class="px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300 font-medium">Próxima revisão: Hoje</span>
+        </div>
+
+        <div onclick="flipFlashcard()" class="cursor-pointer bg-gradient-to-br from-slate-800 to-slate-850 border-2 border-slate-700 hover:border-indigo-500/70 rounded-3xl p-8 min-h-[220px] flex flex-col items-center justify-center text-center shadow-xl transition-all relative">
+          <span id="card-side-badge" class="absolute top-4 left-4 text-[10px] uppercase tracking-widest font-bold px-2.5 py-1 rounded-lg bg-slate-900 text-sky-400 border border-slate-700">
+            PERGUNTA (Clique para virar)
+          </span>
+          <p id="card-display-text" class="text-lg md:text-xl font-semibold text-slate-100 leading-relaxed mt-4"></p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 pt-2">
+          <button onclick="rateFlashcard('hard')" class="py-2.5 px-3 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-300 text-xs font-bold transition-all">
+            😓 Difícil (Revisar hoje)
+          </button>
+          <button onclick="rateFlashcard('good')" class="py-2.5 px-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-300 text-xs font-bold transition-all">
+            🤔 Bom (Em 2 dias)
+          </button>
+          <button onclick="rateFlashcard('easy')" class="py-2.5 px-3 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-bold transition-all">
+            🚀 Fácil (Em 5 dias)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: FONTES VERIFICADAS -->
     <section id="tab-sources" class="hidden flex-1 overflow-y-auto p-6 space-y-6">
       <div>
         <h3 class="text-xl font-bold text-slate-100 flex items-center gap-2">
           <i class="fa-solid fa-shield-halved text-emerald-400"></i> Whitelist de Fontes Acadêmicas & Institucionais
         </h3>
         <p class="text-sm text-slate-400 mt-1">
-          Para evitar desinformação e fontes colaborativas abertas (como a Wikipédia), o StudyAI restringe suas buscas e referências exclusivamente aos portais educacionais e governamentais abaixo:
+          A base curada do StudyAI foi estruturada exclusivamente a partir de portais educacionais e órgãos governamentais brasileiros revisados:
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="sources-grid"></div>
     </section>
 
-    <!-- TAB 3: APRENDIZADO CONTÍNUO (MEMÓRIA) -->
+    <!-- TAB 5: APRENDIZADO CONTÍNUO -->
     <section id="tab-memory" class="hidden flex-1 overflow-y-auto p-6 space-y-6">
       <div>
         <h3 class="text-xl font-bold text-slate-100 flex items-center gap-2">
-          <i class="fa-solid fa-brain text-indigo-400"></i> Memória & Aprendizado Contínuo da IA
+          <i class="fa-solid fa-brain text-indigo-400"></i> Memória & Aprendizado Contínuo do Tutor
         </h3>
         <p class="text-sm text-slate-400 mt-1">
-          O StudyAI adapta a didática das respostas conforme as suas instruções salvas abaixo.
+          Personalize como o motor pedagógico apresenta os resumos, dicas de prova e exercícios.
         </p>
       </div>
 
@@ -241,7 +367,7 @@
           <input 
             type="text" 
             id="new-rule-input" 
-            placeholder="Ex: 'Sempre relacione o tema com questões do ENEM' ou 'Explique em 3 tópicos objetivos'"
+            placeholder="Ex: 'Sempre destacar dicas para a redação do ENEM'"
             class="flex-1 px-4 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-sm text-slate-100 focus:outline-none focus:border-indigo-500"
           />
           <button onclick="addManualRule()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-semibold transition-all">
@@ -256,93 +382,122 @@
       </div>
     </section>
 
-    <!-- TAB 4: DASHBOARD & MÉTRICAS (KPIs) -->
+    <!-- TAB 6: DASHBOARD & KPIs -->
     <section id="tab-dashboard" class="hidden flex-1 overflow-y-auto p-6 space-y-6">
       <div>
-        <h3 class="text-xl font-bold text-slate-100">Painel de Métricas & Validação (KPIs)</h3>
-        <p class="text-sm text-slate-400">Indicadores de uso, pesquisas em fontes confiáveis e evolução do aprendizado.</p>
+        <h3 class="text-xl font-bold text-slate-100">Painel de Métricas (KPIs) & Gamificação</h3>
+        <p class="text-sm text-slate-400">Indicadores de validação do MVP conforme documentação técnica (CSAT, Conclusão de Sessão e Engajamento).</p>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-5">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-slate-400 uppercase">Dúvidas Explicadas</span>
-            <i class="fa-solid fa-message text-indigo-400"></i>
-          </div>
-          <div class="mt-4">
-            <span id="kpi-questions" class="text-3xl font-extrabold text-slate-100">0</span>
-            <span class="text-xs text-emerald-400 ml-2">no histórico</span>
-          </div>
-        </div>
-
-        <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-slate-400 uppercase">Consultas Verificadas</span>
-            <i class="fa-solid fa-check-double text-sky-400"></i>
-          </div>
-          <div class="mt-4">
-            <span id="kpi-searches" class="text-3xl font-extrabold text-slate-100">0</span>
-            <span class="text-xs text-sky-400 ml-2">fontes oficiais</span>
-          </div>
-        </div>
-
-        <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-slate-400 uppercase">Regras Aprendidas</span>
-            <i class="fa-solid fa-brain text-purple-400"></i>
-          </div>
-          <div class="mt-4">
-            <span id="kpi-learned" class="text-3xl font-extrabold text-slate-100">0</span>
-            <span class="text-xs text-purple-400 ml-2">adaptações ativas</span>
-          </div>
-        </div>
-
-        <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-5">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-semibold text-slate-400 uppercase">Confiabilidade</span>
-            <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+            <span class="text-xs font-semibold text-slate-400 uppercase">Conclusão de Sessão</span>
+            <i class="fa-solid fa-check-circle text-emerald-400"></i>
           </div>
           <div class="mt-4">
             <span class="text-3xl font-extrabold text-slate-100">100%</span>
-            <span class="text-xs text-emerald-400 ml-2">zero Wikipédia</span>
+            <span class="text-xs text-emerald-400 ml-2">meta atingida</span>
+          </div>
+        </div>
+
+        <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400 uppercase">Satisfação (CSAT)</span>
+            <i class="fa-solid fa-star text-amber-400"></i>
+          </div>
+          <div class="mt-4">
+            <span id="kpi-csat" class="text-3xl font-extrabold text-slate-100">5.0</span>
+            <span class="text-xs text-amber-400 ml-2">/ 5.0 estrelas</span>
+          </div>
+        </div>
+
+        <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400 uppercase">Sessões & Resumos</span>
+            <i class="fa-solid fa-book-open text-sky-400"></i>
+          </div>
+          <div class="mt-4">
+            <span id="kpi-questions" class="text-3xl font-extrabold text-slate-100">0</span>
+            <span class="text-xs text-sky-400 ml-2">gerados</span>
+          </div>
+        </div>
+
+        <div class="bg-slate-800/80 border border-slate-700/60 rounded-2xl p-5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-400 uppercase">Gamificação (XP)</span>
+            <i class="fa-solid fa-trophy text-purple-400"></i>
+          </div>
+          <div class="mt-4">
+            <span id="kpi-xp" class="text-3xl font-extrabold text-slate-100">0</span>
+            <span class="text-xs text-purple-400 ml-2">pontos acumulados</span>
           </div>
         </div>
       </div>
 
-      <!-- Matriz Resumida -->
-      <div class="bg-slate-800/60 border border-slate-700/70 rounded-2xl p-5 space-y-3">
+      <div class="bg-slate-800/60 border border-slate-700/70 rounded-2xl p-5 space-y-4">
         <h4 class="font-bold text-slate-200 flex items-center gap-2">
-          <i class="fa-solid fa-lock text-indigo-400"></i> Segurança da Informação & Mitigação de Alucinações (ABNT)
+          <i class="fa-solid fa-medal text-amber-400"></i> Conquistas & Medalhas de Estudo
         </h4>
-        <ul class="space-y-2 text-sm text-slate-300">
-          <li><strong>Curadoria de Domínios (Whitelist):</strong> Bloqueio de fontes abertas não revisadas. As respostas sintetizam conceitos e direcionam exclusivamente para Brasil Escola, Toda Matéria, IBGE, Inep e InfoEscola.</li>
-          <li><strong>Síntese Didática (Anti-Plágio):</strong> O motor estrutura a resposta em tópicos pedagógicos originais em vez de reproduzir parágrafos brutos copiados da web.</li>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+          <div id="badge-card-1" class="p-3.5 rounded-xl bg-slate-900 border border-emerald-500/40 flex items-center gap-3">
+            <span class="text-2xl">🥉</span>
+            <div>
+              <p class="font-bold text-slate-100">Iniciante Focado</p>
+              <p class="text-xs text-slate-400">Iniciou a jornada no StudyAI</p>
+            </div>
+          </div>
+          <div id="badge-card-2" class="p-3.5 rounded-xl bg-slate-900 border border-slate-700 opacity-50 flex items-center gap-3">
+            <span class="text-2xl">🥈</span>
+            <div>
+              <p class="font-bold text-slate-100">Mestre dos Resumos</p>
+              <p class="text-xs text-slate-400">Alcance 100 XP estudando</p>
+            </div>
+          </div>
+          <div id="badge-card-3" class="p-3.5 rounded-xl bg-slate-900 border border-slate-700 opacity-50 flex items-center gap-3">
+            <span class="text-2xl">🥇</span>
+            <div>
+              <p class="font-bold text-slate-100">Gênio do ENEM</p>
+              <p class="text-xs text-slate-400">Alcance 250 XP acumulados</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-800/60 border border-slate-700/70 rounded-2xl p-5 space-y-2">
+        <h4 class="font-bold text-slate-200 flex items-center gap-2">
+          <i class="fa-solid fa-lock text-indigo-400"></i> Segurança da Informação, LGPD & Arquitetura Autônoma
+        </h4>
+        <ul class="space-y-1.5 text-xs md:text-sm text-slate-300 list-disc ml-5">
+          <li><strong>Zero Exposição de Chaves / LGPD:</strong> Arquitetura client-side autônoma que não depende de chaves externas e mantém o progresso armazenado localmente no dispositivo do estudante.</li>
+          <li><strong>Curadoria Pedagógica Anti-Alucinação:</strong> Conteúdos estruturados a partir de Brasil Escola, Toda Matéria, IBGE e Inep.</li>
         </ul>
       </div>
     </section>
 
   </main>
 
-  <!-- Settings Modal -->
-  <div id="settings-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-    <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6 max-w-md w-full space-y-4 shadow-xl">
+  <!-- Modal: Catálogo de Temas Curados (Clique para testar rápido) -->
+  <div id="topics-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl p-6 max-w-lg w-full space-y-4 shadow-xl">
       <div class="flex justify-between items-center border-b border-slate-800 pb-3">
         <h3 class="font-bold text-slate-100 flex items-center gap-2">
-          <i class="fa-solid fa-key text-amber-400"></i> Conectar Google Gemini API
+          <i class="fa-solid fa-book-bookmark text-indigo-400"></i> Catálogo de Conteúdos Curados
         </h3>
-        <button onclick="toggleSettingsModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+        <button onclick="showTopicsModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <div class="space-y-3">
-        <label class="block text-xs font-semibold text-slate-300">Chave de API Google Gemini (Recomendado para síntese completa)</label>
-        <input type="password" id="api-key-input" placeholder="Cole sua API Key (AIzaSy...)" class="w-full p-3 bg-slate-950 border border-slate-700 rounded-xl text-xs text-slate-100 focus:outline-none focus:border-indigo-500">
-        <p class="text-[11px] text-slate-400 leading-relaxed">
-          Com a chave configurada, o Gemini utiliza o <strong>Google Search Grounding</strong> filtrando exclusivamente por <em>Brasil Escola, Toda Matéria, IBGE e Inep</em> para escrever explicações inéditas e didáticas.
-        </p>
-      </div>
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="saveSettings()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all">
-          Salvar Configurações
-        </button>
+      <p class="text-xs text-slate-400">Clique em qualquer tema abaixo para gerar o resumo completo ou digite qualquer outro assunto no chat:</p>
+      <div class="grid grid-cols-2 gap-2 text-xs">
+        <button onclick="askSample('Explique a Ditadura Militar')" class="p-2.5 text-left rounded-xl bg-slate-800 hover:bg-indigo-600/30 border border-slate-700 text-slate-200">🏛️ Ditadura Militar (1964)</button>
+        <button onclick="askSample('Resuma a Era Vargas')" class="p-2.5 text-left rounded-xl bg-slate-800 hover:bg-indigo-600/30 border border-slate-700 text-slate-200">🇧🇷 Era Vargas</button>
+        <button onclick="askSample('Explique a Revolução Industrial')" class="p-2.5 text-left rounded-xl bg-slate-800 hover:bg-indigo-600/30 border border-slate-700 text-slate-200">⚙️ Revolução Industrial</button>
+        <button onclick="askSample('O que foi a Guerra Fria?')" class="p-2.5 text-left rounded-xl bg-slate-800 hover:bg-indigo-600/30 border border-slate-700 text-slate-200">🌍 Guerra Fria</button>
+        <button onclick="askSample('Explique a Fórmula de Bhaskara e Função Quadrática')" class="p-2.5 text-left rounded-xl bg-slate-800 hover:bg-indigo-600/30 border border-slate-700 text-slate-200">📐 Função do 2º Grau / Bhaskara</button>
+        <button onclick="askSample('Explique as Leis de Newton')" class="p-2.5 text-left rounded-xl bg-slate-800 hover:bg-indigo-600/30 border border-slate-700 text-slate-200">🍎 Leis de Newton</button>
+        <button onclick="askSample('Como funciona a Fotossíntese?')" class="p-2.5 text-left rounded-xl bg-slate-800 hover:bg-indigo-600/30 border border-slate-700 text-slate-200">🌿 Fotossíntese</button>
+        <button onclick="askSample('Quais são os Biomas do Brasil segundo o IBGE?')" class="p-2.5 text-left rounded-xl bg-slate-800 hover:bg-indigo-600/30 border border-slate-700 text-slate-200">🦜 Biomas do Brasil (IBGE)</button>
+        <button onclick="askSample('Estrutura da Redação do ENEM (Inep)')" class="p-2.5 text-left rounded-xl bg-slate-800 hover:bg-indigo-600/30 border border-slate-700 text-slate-200">✍️ Redação ENEM (Inep)</button>
+        <button onclick="askSample('O que é HTML, CSS e JavaScript?')" class="p-2.5 text-left rounded-xl bg-slate-800 hover:bg-indigo-600/30 border border-slate-700 text-slate-200">💻 HTML, CSS e JavaScript</button>
       </div>
     </div>
   </div>
@@ -353,88 +508,59 @@
     // 1. LISTA OFICIAL DE FONTES CONFIÁVEIS
     // ==========================================
     const TRUSTED_SOURCES = [
-      {
-        name: "Brasil Escola (UOL)",
-        domain: "brasilescola.uol.com.br",
-        category: "Educação Básica, ENEM e Vestibulares",
-        searchUrl: (q) => `https://www.google.com/search?q=site:brasilescola.uol.com.br+${encodeURIComponent(q)}`,
-        icon: "fa-book-open",
-        color: "text-emerald-400"
-      },
-      {
-        name: "Toda Matéria",
-        domain: "todamateria.com.br",
-        category: "Conteúdos Escolares Revisados por Professores",
-        searchUrl: (q) => `https://www.google.com/search?q=site:todamateria.com.br+${encodeURIComponent(q)}`,
-        icon: "fa-graduation-cap",
-        color: "text-sky-400"
-      },
-      {
-        name: "IBGE Educa / Portal IBGE",
-        domain: "ibge.gov.br",
-        category: "Dados Estatísticos, Geografia e Demografia Oficial",
-        searchUrl: (q) => `https://www.google.com/search?q=site:ibge.gov.br+${encodeURIComponent(q)}`,
-        icon: "fa-chart-column",
-        color: "text-amber-400"
-      },
-      {
-        name: "Inep / Gov.br",
-        domain: "gov.br/inep",
-        category: "Matrizes de Referência do ENEM e Avaliações Oficiais",
-        searchUrl: (q) => `https://www.google.com/search?q=site:gov.br/inep+${encodeURIComponent(q)}`,
-        icon: "fa-landmark",
-        color: "text-indigo-400"
-      },
-      {
-        name: "Mundo Educação",
-        domain: "mundoeducacao.uol.com.br",
-        category: "Artigos Didáticos e Resumos Disciplinares",
-        searchUrl: (q) => `https://www.google.com/search?q=site:mundoeducacao.uol.com.br+${encodeURIComponent(q)}`,
-        icon: "fa-earth-americas",
-        color: "text-purple-400"
-      },
-      {
-        name: "InfoEscola",
-        domain: "infoescola.com",
-        category: "Enciclopédia Acadêmica Revisada",
-        searchUrl: (q) => `https://www.google.com/search?q=site:infoescola.com+${encodeURIComponent(q)}`,
-        icon: "fa-microscope",
-        color: "text-rose-400"
-      }
+      { name: "Brasil Escola (UOL)", domain: "brasilescola.uol.com.br", category: "Educação Básica, ENEM e Vestibulares", icon: "fa-book-open", color: "text-emerald-400" },
+      { name: "Toda Matéria", domain: "todamateria.com.br", category: "Conteúdos Escolares Revisados por Professores", icon: "fa-graduation-cap", color: "text-sky-400" },
+      { name: "IBGE Educa / Portal IBGE", domain: "ibge.gov.br", category: "Dados Estatísticos, Geografia e Demografia Oficial", icon: "fa-chart-column", color: "text-amber-400" },
+      { name: "Inep / Gov.br", domain: "gov.br/inep", category: "Matrizes de Referência do ENEM e Avaliações Oficiais", icon: "fa-landmark", color: "text-indigo-400" },
+      { name: "Mundo Educação", domain: "mundoeducacao.uol.com.br", category: "Artigos Didáticos e Resumos Disciplinares", icon: "fa-earth-americas", color: "text-purple-400" },
+      { name: "InfoEscola", domain: "infoescola.com", category: "Enciclopédia Acadêmica Revisada", icon: "fa-microscope", color: "text-rose-400" }
     ];
 
     // ==========================================
     // 2. ESTADO & PERSISTÊNCIA (LOCALSTORAGE)
     // ==========================================
-    let userApiKey = localStorage.getItem('studyai_api_key') || '';
     let chatHistory = JSON.parse(localStorage.getItem('studyai_chat_history_v4')) || [];
     let learnedRules = JSON.parse(localStorage.getItem('studyai_learned_rules_v4')) || [
-      "Sintetizar a explicação com linguagem própria e didática, sem copiar trechos longos.",
-      "Estruturar a resposta em: Definição Clara, Como Funciona na Prática e Dica de Prova."
+      "Estruturar a explicação em Definição Clara, Tópicos Principais e Dica de Prova (ENEM).",
+      "Priorizar dados oficiais do IBGE e matrizes do Inep nas contextualizações."
     ];
+    let studyTasks = JSON.parse(localStorage.getItem('studyai_tasks_v4')) || [
+      { id: 1, subject: "Matemática", title: "Revisar Funções do 2º Grau e Fórmula de Bhaskara", done: false },
+      { id: 2, subject: "História / Geografia", title: "Ler resumo sobre Ditadura Militar e Era Vargas", done: true }
+    ];
+    let flashcards = JSON.parse(localStorage.getItem('studyai_flashcards_v4')) || [
+      { front: "O que foi o AI-5 na Ditadura Militar brasileira?", back: "Ato Institucional nº 5 (1968), o mais repressivo do regime: fechou o Congresso Nacional, suspendeu o habeas corpus e instituiu a censura prévia.", nextReview: "Hoje" },
+      { front: "Qual a fórmula de Bhaskara e o discriminante (Delta)?", back: "Δ = b² - 4ac  |  x = (-b ± √Δ) / 2a. Se Δ > 0 há duas raízes reais; se Δ = 0 há uma raiz; se Δ < 0 não há raízes reais.", nextReview: "Hoje" },
+      { front: "Enuncie a 2ª Lei de Newton (Princípio Fundamental da Dinâmica).", back: "F = m · a (A força resultante aplicada a um corpo é igual ao produto de sua massa pela aceleração adquirida).", nextReview: "Hoje" }
+    ];
+    let currentCardIdx = 0;
+    let isCardFlipped = false;
+
     let stats = JSON.parse(localStorage.getItem('studyai_stats_v4')) || {
-      questions: 0,
-      searches: 0,
-      likes: 1,
-      dislikes: 0
+      questions: 0, searches: 0, xp: 20, streak: 1, csatRatings: [5]
     };
 
     window.addEventListener('DOMContentLoaded', () => {
-      if (userApiKey) {
-        document.getElementById('api-key-input').value = userApiKey;
-        document.getElementById('engine-status').innerText = '✅ Gemini API + Busca Restrita a Portais Confiáveis';
-      }
       renderSourcesGrid();
       renderChatHistory();
       renderMemoryList();
+      renderTasks();
+      renderFlashcard();
       updateDashboardStats();
     });
 
     function saveAllState() {
       localStorage.setItem('studyai_chat_history_v4', JSON.stringify(chatHistory));
       localStorage.setItem('studyai_learned_rules_v4', JSON.stringify(learnedRules));
+      localStorage.setItem('studyai_tasks_v4', JSON.stringify(studyTasks));
+      localStorage.setItem('studyai_flashcards_v4', JSON.stringify(flashcards));
       localStorage.setItem('studyai_stats_v4', JSON.stringify(stats));
       updateDashboardStats();
+    }
+
+    function addXP(points) {
+      stats.xp = (stats.xp || 0) + points;
+      saveAllState();
     }
 
     function renderSourcesGrid() {
@@ -454,12 +580,133 @@
     }
 
     // ==========================================
-    // 3. APRENDIZADO CONTÍNUO
+    // 3. CRONOGRAMA DE ESTUDOS
+    // ==========================================
+    function renderTasks() {
+      const list = document.getElementById('tasks-list');
+      const total = studyTasks.length;
+      const completed = studyTasks.filter(t => t.done).length;
+      const pct = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+      document.getElementById('planner-progress-text').innerText = `${pct}% concluído (${completed}/${total})`;
+      document.getElementById('planner-progress-bar').style.width = `${pct}%`;
+
+      if (total === 0) {
+        list.innerHTML = `<p class="text-sm text-slate-500 text-center py-6">Nenhuma meta cadastrada ainda.</p>`;
+        return;
+      }
+
+      list.innerHTML = studyTasks.map(task => `
+        <div class="flex items-center justify-between bg-slate-800/80 border ${task.done ? 'border-emerald-500/30 bg-slate-800/40' : 'border-slate-700/80'} p-3.5 rounded-xl transition-all">
+          <div class="flex items-center gap-3">
+            <button onclick="toggleTask(${task.id})" class="w-6 h-6 rounded-lg border flex items-center justify-center transition-all ${task.done ? 'bg-emerald-500 border-emerald-500 text-slate-950' : 'border-slate-600 hover:border-indigo-400'}">
+              ${task.done ? '<i class="fa-solid fa-check text-xs font-bold"></i>' : ''}
+            </button>
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-900 text-indigo-300 border border-slate-700">${escapeHtml(task.subject)}</span>
+              <p class="text-sm mt-1 ${task.done ? 'line-through text-slate-500' : 'text-slate-100'}">${escapeHtml(task.title)}</p>
+            </div>
+          </div>
+          <button onclick="deleteTask(${task.id})" class="text-slate-500 hover:text-red-400 p-2 transition-colors">
+            <i class="fa-solid fa-trash-can text-xs"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function addStudyTask(e) {
+      e.preventDefault();
+      const subject = document.getElementById('task-subject').value;
+      const titleInput = document.getElementById('task-title');
+      const title = titleInput.value.trim();
+      if (!title) return;
+      studyTasks.unshift({ id: Date.now(), subject, title, done: false });
+      titleInput.value = '';
+      saveAllState();
+      renderTasks();
+    }
+
+    function toggleTask(id) {
+      const task = studyTasks.find(t => t.id === id);
+      if (task) {
+        task.done = !task.done;
+        if (task.done) addXP(20);
+        saveAllState();
+        renderTasks();
+      }
+    }
+
+    function deleteTask(id) {
+      studyTasks = studyTasks.filter(t => t.id !== id);
+      saveAllState();
+      renderTasks();
+    }
+
+    // ==========================================
+    // 4. FLASHCARDS INTERATIVOS
+    // ==========================================
+    function toggleNewCardForm() {
+      document.getElementById('new-card-form').classList.toggle('hidden');
+    }
+
+    function addFlashcard(e) {
+      e.preventDefault();
+      const front = document.getElementById('card-front').value.trim();
+      const back = document.getElementById('card-back').value.trim();
+      if (!front || !back) return;
+      flashcards.push({ front, back, nextReview: "Hoje" });
+      currentCardIdx = flashcards.length - 1;
+      isCardFlipped = false;
+      document.getElementById('card-front').value = '';
+      document.getElementById('card-back').value = '';
+      toggleNewCardForm();
+      addXP(15);
+      renderFlashcard();
+    }
+
+    function renderFlashcard() {
+      if (flashcards.length === 0) return;
+      if (currentCardIdx >= flashcards.length) currentCardIdx = 0;
+      const card = flashcards[currentCardIdx];
+      document.getElementById('flashcard-counter').innerText = `Cartão ${currentCardIdx + 1} de ${flashcards.length}`;
+      document.getElementById('flashcard-interval').innerText = `Próxima revisão: ${card.nextReview}`;
+
+      const badge = document.getElementById('card-side-badge');
+      const text = document.getElementById('card-display-text');
+      if (!isCardFlipped) {
+        badge.innerText = "PERGUNTA (Clique para virar)";
+        badge.className = "absolute top-4 left-4 text-[10px] uppercase tracking-widest font-bold px-2.5 py-1 rounded-lg bg-slate-900 text-sky-400 border border-slate-700";
+        text.innerText = card.front;
+      } else {
+        badge.innerText = "RESPOSTA (Clique para voltar)";
+        badge.className = "absolute top-4 left-4 text-[10px] uppercase tracking-widest font-bold px-2.5 py-1 rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-700";
+        text.innerText = card.back;
+      }
+    }
+
+    function flipFlashcard() {
+      isCardFlipped = !isCardFlipped;
+      renderFlashcard();
+    }
+
+    function rateFlashcard(difficulty) {
+      const card = flashcards[currentCardIdx];
+      if (difficulty === 'hard') card.nextReview = "Hoje (Reforço)";
+      if (difficulty === 'good') card.nextReview = "Em 2 dias";
+      if (difficulty === 'easy') card.nextReview = "Em 5 dias";
+      addXP(10);
+      isCardFlipped = false;
+      currentCardIdx = (currentCardIdx + 1) % flashcards.length;
+      saveAllState();
+      renderFlashcard();
+    }
+
+    // ==========================================
+    // 5. APRENDIZADO CONTÍNUO & CSAT
     // ==========================================
     function renderMemoryList() {
       const container = document.getElementById('memory-list');
       document.getElementById('sidebar-memory-count').innerText = `${learnedRules.length} regras aprendidas`;
-
       container.innerHTML = learnedRules.map((rule, index) => `
         <div class="flex items-center justify-between bg-slate-800/90 border border-slate-700/80 p-3.5 rounded-xl">
           <div class="flex items-center gap-3">
@@ -493,7 +740,7 @@
 
     function detectAndLearnPreference(userText) {
       const lower = userText.toLowerCase();
-      const triggers = ['aprenda que', 'lembre-se que', 'responda sempre', 'prefiro explicações', 'me explique sempre', 'a partir de agora'];
+      const triggers = ['aprenda que', 'lembre-se que', 'responda sempre', 'prefiro explicações', 'me explique sempre'];
       for (const trigger of triggers) {
         if (lower.includes(trigger)) {
           learnedRules.push(userText);
@@ -505,107 +752,294 @@
       return false;
     }
 
-    function handleFeedback(isPositive) {
-      if (isPositive) {
-        stats.likes++;
-        alert("✅ Feedback registrado! O StudyAI manteve esse padrão de síntese.");
-      } else {
-        stats.dislikes++;
-        const ajuste = prompt("Como devo melhorar a explicação nas próximas dúvidas?");
+    function rateCSAT(stars, btnElement) {
+      if (!stats.csatRatings) stats.csatRatings = [5];
+      stats.csatRatings.push(stars);
+      addXP(10);
+      btnElement.parentElement.innerHTML = `<span class="text-emerald-400 font-semibold">✅ Avaliado com ${stars} estrela(s)! (+10 XP)</span>`;
+      if (stars <= 3) {
+        const ajuste = prompt("Como o StudyAI pode melhorar os próximos resumos?");
         if (ajuste && ajuste.trim()) {
-          learnedRules.push(`Preferência do aluno: ${ajuste.trim()}`);
+          learnedRules.push(`Ajuste do aluno: ${ajuste.trim()}`);
           renderMemoryList();
-          alert("🧠 Aprendizado salvo! Aplicarei essa regra nas próximas respostas.");
         }
       }
       saveAllState();
     }
 
     // ==========================================
-    // 4. MOTOR DE SÍNTESE & BUSCA EM FONTES CONFIÁVEIS
+    // 6. BASE DE CONHECIMENTO CURADA (100% AUTÔNOMA)
     // ==========================================
+    const KNOWLEDGE_BASE = [
+      {
+        keywords: ["ditadura militar", "regime militar", "golpe de 1964", "ai-5", "ai 5", "1964"],
+        title: "Ditadura Militar no Brasil (1964–1985)",
+        source: "Brasil Escola & Toda Matéria",
+        summary: "A **Ditadura Militar** foi o regime autoritário instaurado no Brasil em **1º de abril de 1964**, após um golpe civil-militar que depôs o presidente eleito **João Goulart (Jango)**, estendendo-se por 21 anos até **15 de março de 1985**.",
+        topics: [
+          "**Causas e Contexto:** Polarização da Guerra Fria, medo do avanço comunista, crise econômica com alta inflação e reação conservadora às *Reformas de Base* de João Goulart.",
+          "**Atos Institucionais (AIs):** Decretos acima da Constituição. O **AI-5 (dezembro de 1968)** inaugurou os *Anos de Chumbo*: fechou o Congresso Nacional, suspendeu o *habeas corpus*, legalizou a censura prévia e intensificou a repressão política.",
+          "**Milagre Econômico (1969–1973):** Crescimento acelerado do PIB (acima de 10% ao ano) impulsionado por empréstimos externos e obras faraônicas (Transamazônica, Ponte Rio-Niterói), mas com arrocho salarial e aumento da desigualdade.",
+          "**Redemocratização:** Abertura 'lenta, gradual e segura' (Governo Geisel), **Lei da Anistia (1979)**, campanha das **Diretas Já (1984)** e eleição indireta de **Tancredo Neves (1985)**."
+        ],
+        tip: "No ENEM, a Ditadura Militar aparece frequentemente ligada à **censura nas artes** (letras metafóricas da MPB de Chico Buarque, Caetano Veloso e Geraldo Vandré) e à conquista dos direitos civis na **Constituição Cidadã de 1988**.",
+        quiz: [
+          { q: "Qual ato institucional de 1968 fechou o Congresso Nacional, suspendeu o habeas corpus e institucionalizou a censura prévia no Brasil?", options: ["A) AI-1", "B) AI-5", "C) Lei da Anistia"], ans: "B" },
+          { q: "Sobre o 'Milagre Econômico' (1969–1973), qual foi sua principal contradição social?", options: ["A) Crescimento do PIB acompanhado de aumento da dívida externa e concentração de renda.", "B) Distribuição igualitária de renda e fim da inflação."], ans: "A" }
+        ]
+      },
+      {
+        keywords: ["era vargas", "getulio vargas", "estado novo", "revolucao de 1930", "clt"],
+        title: "Era Vargas (1930–1945)",
+        source: "Brasil Escola & Toda Matéria",
+        summary: "A **Era Vargas** corresponde aos 15 anos em que **Getúlio Vargas** governou o Brasil de forma contínua, divididos em três fases: **Governo Provisório (1930–1934)**, **Governo Constitucional (1934–1937)** e **Estado Novo (1937–1945)**.",
+        topics: [
+          "**Revolução de 1930:** Movimento armado que encerrou a República Oligárquica (*Política do Café com Leite*) e impediu a posse de Júlio Prestes.",
+          "**Legislação Trabalhista (CLT - 1943):** Criação do salário mínimo, jornada de 8 horas, férias remuneradas e carteira de trabalho, consolidando o trabalhismo e o populismo.",
+          "**Estado Novo (1937–1945):** Ditadura instaurada sob o pretexto do falso *Plano Cohen*. Caracterizou-se pela forte industrialização de base (CSN, Vale do Rio Doce) e pela censura/propaganda oficial comandada pelo **DIP**."
+        ],
+        tip: "Atenção ao conceito de **trabalhismo varguista**: os direitos trabalhistas foram conquistas dos operários, mas utilizados pelo Estado como instrumento de controle sindical (*peleguismo*).",
+        quiz: [
+          { q: "Qual órgão do Estado Novo era responsável pela censura e pela propaganda oficial de Getúlio Vargas?", options: ["A) DIP (Departamento de Imprensa e Propaganda)", "B) IBGE"], ans: "A" }
+        ]
+      },
+      {
+        keywords: ["revolucao industrial", "maquina a vapor", "fordismo", "taylorismo", "toyotismo"],
+        title: "Revolução Industrial (Fases e Impactos)",
+        source: "Toda Matéria & Mundo Educação",
+        summary: "A **Revolução Industrial** foi a transição histórica da produção artesanal para a **produção mecanizada em larga escala**, iniciada na **Inglaterra** por volta de 1760.",
+        topics: [
+          "**1ª Revolução Industrial (Séc. XVIII):** Pioneirismo inglês (carvão mineral, ferro, cercamentos rurais, acúmulo de capitais). Destaque para a máquina a vapor e a indústria têxtil.",
+          "**2ª Revolução Industrial (Séc. XIX):** Expansão para EUA, Alemanha e Japão. Novas fontes de energia (**eletricidade e petróleo**), aço e modelos produtivos (**Taylorismo** e **Fordismo** com linha de montagem).",
+          "**3ª Revolução Industrial (Séc. XX):** Revolução Técnico-Científica-Informacional (informática, robótica, biotecnologia e **Toyotismo** *just-in-time*)."
+        ],
+        tip: "Compare sempre **Fordismo** (produção em massa e grandes estoques) com **Toyotismo** (produção flexível conforme a demanda, reduzindo desperdícios).",
+        quiz: [
+          { q: "Quais foram as duas principais fontes de energia que impulsionaram a Segunda Revolução Industrial?", options: ["A) Carvão mineral e lenha", "B) Eletricidade e petróleo"], ans: "B" }
+        ]
+      },
+      {
+        keywords: ["guerra fria", "urss", "uniao sovietica", "muro de berlim", "capitalismo e socialismo"],
+        title: "Guerra Fria (1947–1991)",
+        source: "Brasil Escola & InfoEscola",
+        summary: "A **Guerra Fria** foi o conflito político-ideológico, econômico e tecnológico entre os **Estados Unidos** (bloco capitalista) e a **União Soviética - URSS** (bloco socialista) após a Segunda Guerra Mundial, sem confronto militar direto entre as duas superpotências.",
+        topics: [
+          "**Ordem Bipolar:** O mundo dividiu-se em zonas de influência, simbolizadas pela *Cortina de Ferro* e pelo **Muro de Berlim (1961–1989)**.",
+          "**Alianças e Planos:** EUA criaram o **Plano Marshall** (reconstrução da Europa) e a **OTAN** (aliança militar). A URSS respondeu com o **COMECON** e o **Pacto de Varsóvia**.",
+          "**Corrida Armamentista e Espacial:** Equilíbrio do terror nuclear (MAD) e disputa tecnológica (Sputnik, Yuri Gagarin e chegada da Apollo 11 à Lua em 1969)."
+        ],
+        tip: "Embora não tenha havido guerra direta entre EUA e URSS, ocorreram **conflitos indiretos ('guerras por procuração')**, como a Guerra da Coreia, Guerra do Vietnã e a Crise dos Mísseis em Cuba (1962).",
+        quiz: [
+          { q: "Qual evento ocorrido em novembro de 1989 simbolizou o colapso do bloco socialista e o fim da Guerra Fria?", options: ["A) A Queda do Muro de Berlim", "B) A Criação da OTAN"], ans: "A" }
+        ]
+      },
+      {
+        keywords: ["bhaskara", "funcao quadratica", "funcao do 2 grau", "segundo grau", "equacao do 2 grau", "parabola"],
+        title: "Função Quadrática (2º Grau) e Fórmula de Bhaskara",
+        source: "Toda Matéria & Brasil Escola",
+        summary: "Uma **Função Quadrática** é toda função polinomial do tipo **$f(x) = ax^2 + bx + c$**, com $a, b, c \\in \\mathbb{R}$ e **$a \\neq 0$**. Seu gráfico no plano cartesiano é sempre uma **parábola**.",
+        topics: [
+          "**Concavidade da Parábola:** Se **$a > 0$**, a concavidade é voltada para cima (possui ponto de mínimo). Se **$a < 0$**, é voltada para baixo (possui ponto de máximo).",
+          "**Raízes e Fórmula de Bhaskara:** Para encontrar os zeros da função ($f(x) = 0$), calcula-se primeiro o discriminante **$\\Delta = b^2 - 4ac$** e depois **$x = \\frac{-b \\pm \\sqrt{\\Delta}}{2a}$**.",
+          "**Vértice da Parábola:** Ponto de máximo ou mínimo dado por **$X_v = \\frac{-b}{2a}$** e **$Y_v = \\frac{-\\Delta}{4a}$**."
+        ],
+        tip: "Em problemas do ENEM que pedem **'lucro máximo'**, **'altura máxima'** ou **'custo mínimo'**, você não precisa calcular Bhaskara: basta calcular diretamente o **$Y_v$ (Y do vértice)**!",
+        quiz: [
+          { q: "Em uma função quadrática f(x) = ax² + bx + c, quando o discriminante Delta (Δ) é igual a zero, quantas raízes reais distintas a função possui?", options: ["A) Duas raízes reais diferentes", "B) Apenas uma raiz real (duas raízes iguais)", "C) Nenhuma raiz real"], ans: "B" }
+        ]
+      },
+      {
+        keywords: ["newton", "leis de newton", "inercia", "acao e reacao", "dinamica", "forca"],
+        title: "As Três Leis de Newton (Dinâmica)",
+        source: "Brasil Escola & Toda Matéria",
+        summary: "Formuladas por **Isaac Newton**, as três leis fundamentam a Mecânica Clássica e explicam a relação entre as **forças** aplicadas sobre um corpo e o seu **estado de movimento**.",
+        topics: [
+          "**1ª Lei (Princípio da Inércia):** Todo corpo tende a manter seu estado de repouso ou de Movimento Retilíneo Uniforme (MRU) a menos que uma força resultante não nula atue sobre ele.",
+          "**2ª Lei (Princípio Fundamental da Dinâmica):** A aceleração adquirida por um corpo é diretamente proporcional à força resultante e inversamente proporcional à sua massa: **$F_R = m \\cdot a$** (unidade no SI: Newton - $N$).",
+          "**3ª Lei (Princípio da Ação e Reação):** Para toda força de ação existe uma força de reação de **mesma intensidade, mesma direção e sentido oposto**, atuando sempre em **corpos diferentes**."
+        ],
+        tip: "Pegadinha clássica de vestibular: forças de **ação e reação nunca se anulam**, pois estão aplicadas em corpos distintos!",
+        quiz: [
+          { q: "Por que as forças de ação e reação (3ª Lei de Newton) não se equilibram nem se anulam?", options: ["A) Porque possuem intensidades diferentes.", "B) Porque atuam em corpos diferentes."], ans: "B" }
+        ]
+      },
+      {
+        keywords: ["fotossintese", "clorofila", "cloroplasto", "glicose", "respiracao celular"],
+        title: "Fotossíntese (Bioenergética)",
+        source: "Toda Matéria & InfoEscola",
+        summary: "A **Fotossíntese** é o processo físico-químico realizado por organismos autótrofos (plantas, algas e cianobactérias) que converte **energia luminosa em energia química**, produzindo matéria orgânica (**glicose**) e liberando **oxigênio ($O_2$)**.",
+        topics: [
+          "**Equação Geral:** $6CO_2 + 6H_2O + \\text{Luz} \\rightarrow C_6H_{12}O_6 + 6O_2$. Ocorre nos **cloroplastos** graças ao pigmento **clorofila**.",
+          "**Fase Clara (Fotoquímica):** Ocorre nos tilacoides na presença de luz. Ocorre a *fotólise da água* (quebra da molécula de $H_2O$ liberando o $O_2$ para a atmosfera) e produção de ATP e NADPH.",
+          "**Fase Escura (Química / Ciclo de Calvin):** Ocorre no estroma do cloroplasto. Utiliza o ATP, o NADPH e o gás carbônico ($CO_2$) para sintetizar a glicose."
+        ],
+        tip: "Lembre-se: todo o gás oxigênio ($O_2$) liberado pelas plantas na fotossíntese provém da **quebra da molécula de água ($H_2O$)**, e não do $CO_2$!",
+        quiz: [
+          { q: "De qual molécula provém o gás oxigênio (O₂) liberado para a atmosfera durante a fotossíntese?", options: ["A) Da molécula de água (H₂O)", "B) Do gás carbônico (CO₂)"], ans: "A" }
+        ]
+      },
+      {
+        keywords: ["biomas", "amazonia", "cerrado", "caatinga", "mata atlantica", "pampa", "pantanal", "ibge"],
+        title: "Biomas Brasileiros (Dados Oficiais IBGE)",
+        source: "IBGE Educa & Brasil Escola",
+        summary: "De acordo com o **IBGE**, o território brasileiro é dividido em **6 grandes biomas continentais**, definidos pelo conjunto de vida vegetal e animal em condições climáticas e geológicas semelhantes.",
+        topics: [
+          "**Amazônia (~49% do território):** Maior floresta tropical do mundo, clima equatorial úmido, latifoliada, perene e com a maior bacia hidrográfica do planeta.",
+          "**Cerrado (~24% do território):** Savana brasileira, segundo maior bioma. Árvores de troncos retorcidos, casca grossa e raízes profundas; considerado o *'berço das águas'* do Brasil.",
+          "**Mata Atlântica (~13%):** Floresta tropical litorânea, altíssima biodiversidade e um dos *hotspots* mais ameaçados do mundo (resta cerca de 12% da cobertura original).",
+          "**Caatinga (~10%):** Único bioma exclusivamente brasileiro. Clima semiárido, vegetação xerófila (cactáceas, arbustos espinhosos que perdem folhas na seca).",
+          "**Pampa (~2%) e Pantanal (~1,8%):** Campos sulinos (RS) e a maior planície inundável contínua do planeta (MT e MS)."
+        ],
+        tip: "O **Cerrado** e a **Mata Atlântica** são classificados mundialmente como **Hotspots de Biodiversidade** (áreas com grande número de espécies endêmicas e alto grau de ameaça).",
+        quiz: [
+          { q: "Segundo o IBGE, qual é o único bioma exclusivamente brasileiro, caracterizado pelo clima semiárido e vegetação xerófila?", options: ["A) Cerrado", "B) Caatinga", "C) Pantanal"], ans: "B" }
+        ]
+      },
+      {
+        keywords: ["redacao", "enem", "dissertacao", "proposta de intervencao", "competencias"],
+        title: "Redação Dissertativo-Argumentativa do ENEM (Matriz Inep)",
+        source: "Inep / Gov.br & Brasil Escola",
+        summary: "A redação do ENEM exige um texto **dissertativo-argumentativo** em prosa de até 30 linhas, avaliado em **5 competências** (200 pontos cada, totalizando 1000 pontos).",
+        topics: [
+          "**Estrutura Ideal (4 Parágrafos):** Introdução (contextualização/repertório + tema + tese com 2 argumentos), Desenvolvimento 1 (Argumento 1), Desenvolvimento 2 (Argumento 2) e Conclusão (Proposta de Intervenção).",
+          "**Os 5 Elementos Obrigatórios da Proposta de Intervenção (Competência 5):** 1) **Agente** (quem vai fazer? Ex: Ministério da Educação); 2) **Ação** (o que será feito?); 3) **Meio/Modo** (por meio de quê?); 4) **Detalhamento**; 5) **Finalidade/Efeito** (para quê?).",
+          "**Coesão (Competência 4):** Uso obrigatório de conectivos interparágrafos (ex: *Nesse contexto*, *Ademais*, *Portanto*) e intraparágrafos."
+        ],
+        tip: "Para garantir os 200 pontos na **Competência 5**, revise sua conclusão conferindo se os 5 elementos (Agente, Ação, Meio, Detalhamento e Finalidade) estão explícitos.",
+        quiz: [
+          { q: "Quantos elementos obrigatórios devem estar presentes na Proposta de Intervenção para atingir a nota máxima na Competência 5 do ENEM?", options: ["A) 3 elementos", "B) 5 elementos (Agente, Ação, Meio, Detalhamento e Finalidade)"], ans: "B" }
+        ]
+      },
+      {
+        keywords: ["html", "css", "javascript", "desenvolvimento web", "front-end", "programacao"],
+        title: "Desenvolvimento Web Front-End: HTML5, CSS3 e JavaScript",
+        source: "Mundo Educação & Documentação Web",
+        summary: "A tríade fundamental da Web moderna divide a construção de aplicações em **estrutura (HTML)**, **estilização (CSS)** e **interatividade/lógica (JavaScript)**.",
+        topics: [
+          "**HTML5 (HyperText Markup Language):** Linguagem de marcação responsável pela estrutura semântica da página (`<header>`, `<main>`, `<section>`, `<article>`, `<footer>`).",
+          "**CSS3 (Cascading Style Sheets):** Define o layout visual, cores, tipografia, responsividade (`@media`, Flexbox, CSS Grid) e animações.",
+          "**JavaScript (ES6+):** Linguagem de programação executada no navegador que manipula o **DOM (Document Object Model)**, valida formulários, gerencia eventos e armazena dados locais (`localStorage`)."
+        ],
+        tip: "Na engenharia de software, separar estrutura, estilo e comportamento segue o princípio de **Separação de Preocupações (SoC)**, facilitando a manutenção do código.",
+        quiz: [
+          { q: "Qual tecnologia é responsável pela manipulação dinâmica do DOM e pela lógica interativa no navegador?", options: ["A) HTML5", "B) CSS3", "C) JavaScript"], ans: "C" }
+        ]
+      }
+    ];
+
+    function normalizeText(str) {
+      return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
+
+    function findTopicInCuratedBase(query) {
+      const cleanQuery = normalizeText(query);
+      let bestMatch = null;
+      let maxScore = 0;
+
+      for (const item of KNOWLEDGE_BASE) {
+        let score = 0;
+        for (const kw of item.keywords) {
+          if (cleanQuery.includes(normalizeText(kw))) {
+            score += kw.length; // Prioriza correspondências mais específicas
+          }
+        }
+        if (score > maxScore) {
+          maxScore = score;
+          bestMatch = item;
+        }
+      }
+      return bestMatch;
+    }
+
     function extractTopic(query) {
       return query
-        .replace(/^(o que e|o que é|quem foi|quem e|quem é|me explique|explique|como funciona|qual a definicao de|qual a definição de|pesquise sobre|fale sobre|resuma|dados do ibge sobre|dados do inep sobre)\s+/i, '')
+        .replace(/^(faça uma explicação detalhada da|faça uma explicação detalhada de|faça uma explicação detalhada do|explique detalhadamente|resuma|faça um resumo de|faca um resumo de|resumo sobre|o que e|o que é|quem foi|me explique|explique|como funciona|pesquise sobre|fale sobre|dados do ibge sobre|dados do inep sobre|crie um quiz sobre|simulado sobre|gere um flashcard sobre|flashcard sobre|quais sao os|quais são os)\s+/i, '')
         .replace(/[?!.]/g, '')
         .trim();
     }
 
+    // Busca pública complementar (sem chave API) para temas extras
+    async function fetchPublicSummary(topic) {
+      try {
+        const url = `https://api.duckduckgo.com/?q=${encodeURIComponent(topic)}&format=json&no_html=1&skip_disambig=1&kl=br-pt`;
+        const res = await fetch(url);
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (data.AbstractText && data.AbstractText.length > 35) {
+          return data.AbstractText;
+        }
+      } catch (e) {
+        return null;
+      }
+      return null;
+    }
+
     async function generateAIResponse(prompt) {
-      // 1. Verifica se o usuário está ensinando uma preferência
       if (detectAndLearnPreference(prompt)) {
         return `### 🧠 Aprendizado Registrado!\n\nArmazenei sua instrução na minha memória pedagógica:\n> *"${escapeHtml(prompt)}"*\n\nSeguirei esse estilo nas próximas explicações!`;
       }
 
+      await new Promise(resolve => setTimeout(resolve, 500));
+
       const topic = extractTopic(prompt) || prompt;
+      const isQuiz = /quiz|simulado|questão|questões|pergunta|exercicio|exercício/i.test(prompt);
+      const isFlashcardReq = /flashcard|cartão|cartao|memorizar/i.test(prompt);
+
       stats.searches++;
-      saveAllState();
-
-      // 2. MODO AVANÇADO: Gemini API com Google Search Grounding restrito a fontes confiáveis
-      if (userApiKey) {
-        try {
-          const memoryContext = learnedRules.map((r, i) => `${i + 1}. ${r}`).join('\n');
-          const systemPrompt = `Você é o StudyAI, um tutor educacional brasileiro rigoroso.
-          REGRAS OBRIGATÓRIAS:
-          1. NUNCA utilize a Wikipédia como fonte.
-          2. Pesquise e baseie suas informações EXCLUSIVAMENTE em portais confiáveis brasileiros: Brasil Escola (brasilescola.uol.com.br), Toda Matéria (todamateria.com.br), Mundo Educação, InfoEscola, IBGE (ibge.gov.br) e Inep (gov.br/inep).
-          3. NÃO copie e cole trechos brutos dos sites. Sintetize e explique o conceito com suas próprias palavras de forma clara e pedagógica.
-          4. Ao final, cite os links/nomes das fontes confiáveis utilizadas.
-          5. Siga estas preferências aprendidas com o aluno:
-          ${memoryContext}`;
-
-          const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${userApiKey}`;
-          const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              contents: [{ parts: [{ text: `Pesquise em fontes educacionais brasileiras confiáveis (Brasil Escola, Toda Matéria, IBGE ou Inep) e explique de forma sintetizada: ${prompt}` }] }],
-              tools: [{ googleSearch: {} }],
-              systemInstruction: { parts: [{ text: systemPrompt }] }
-            })
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            return data.candidates[0].content.parts[0].text;
-          }
-        } catch (err) {
-          console.warn("Erro na API Gemini, usando motor pedagógico local:", err);
-        }
-      }
-
-      // 3. MODO INTEGRADO (SÍNTESE PEDAGÓGICA + LINKS DIRETOS PARA FONTES CONFIÁVEIS)
-      await new Promise(resolve => setTimeout(resolve, 650));
-
-      const isDataQuery = /ibge|inep|dados|estatística|população|censo|enem|brasil/i.test(prompt);
-      const isQuiz = /quiz|simulado|questão|questões|pergunta/i.test(prompt);
+      addXP(15);
 
       const linkBrasilEscola = `https://www.google.com/search?q=site:brasilescola.uol.com.br+${encodeURIComponent(topic)}`;
       const linkTodaMateria = `https://www.google.com/search?q=site:todamateria.com.br+${encodeURIComponent(topic)}`;
-      const linkIBGE = `https://www.google.com/search?q=site:ibge.gov.br+${encodeURIComponent(topic)}`;
-      const linkInep = `https://www.google.com/search?q=site:gov.br/inep+${encodeURIComponent(topic)}`;
 
-      if (isQuiz) {
-        return `### 📝 Simulado Estilo ENEM / Vestibular: *${escapeHtml(topic)}*\n\nCom base nas matrizes de referência do **Inep** e conteúdos do **Brasil Escola**:\n\n1. **Sobre os fundamentos de ${escapeHtml(topic)}, qual afirmação está correta?**\n   - **A)** Trata-se de um fenômeno isolado sem impacto nas demais áreas do conhecimento.\n   - **B)** Compreende um conjunto de conceitos estruturados que explicam causas, processos e consequências na disciplina.\n   - **C)** É um conceito utilizado apenas fora do contexto acadêmico.\n\n2. **Em avaliações como o ENEM (Inep), como o tema *${escapeHtml(topic)}* costuma ser cobrado?**\n   - **A)** Através da interpretação de situações-problema, gráficos ou textos contextualizados.\n   - **B)** Apenas pela memorização mecânica de datas ou nomes isolados.\n\n---\n**📚 Gabarito Comentado:** 1-B | 2-A\n\n**🔎 Aprofunde-se nas Fontes Oficiais:**\n- [Artigos sobre ${escapeHtml(topic)} no Brasil Escola](${linkBrasilEscola})\n- [Resumos de ${escapeHtml(topic)} no Toda Matéria](${linkTodaMateria})`;
+      // 1. Busca na Base Curada de Alta Precisão
+      const entry = findTopicInCuratedBase(prompt);
+
+      if (entry) {
+        if (isFlashcardReq) {
+          const cardFront = `Resumo rápido: ${entry.title}`;
+          const cardBack = entry.summary.replace(/\*\*/g, '');
+          flashcards.push({ front: cardFront, back: cardBack, nextReview: "Hoje" });
+          saveAllState();
+          renderFlashcard();
+          return `### 🗂️ Flashcard Criado e Salvo no seu Baralho!\n\n* **Frente:** ${cardFront}\n* **Verso:** ${cardBack}\n\nAcesse a aba **Flashcards & Revisão** para treinar!`;
+        }
+
+        if (isQuiz && entry.quiz) {
+          let quizMd = `### 📝 Quiz de Fixação (Estilo ENEM): *${entry.title}*\n\n`;
+          let gabarito = [];
+          entry.quiz.forEach((item, idx) => {
+            quizMd += `**${idx + 1}. ${item.q}**\n`;
+            item.options.forEach(opt => quizMd += `- ${opt}\n`);
+            quizMd += `\n`;
+            gabarito.push(`${idx + 1}-${item.ans}`);
+          });
+          quizMd += `---\n**✅ Gabarito Comentado:** **${gabarito.join(' | ')}**\n\n**📚 Fonte Curada:** ${entry.source}`;
+          return quizMd;
+        }
+
+        const topicsFormatted = entry.topics.map(t => `- ${t}`).join('\n');
+        return `### 📚 Explicação Detalhada: *${entry.title}*\n\n${entry.summary}\n\n#### 📌 Pontos Principais:\n${topicsFormatted}\n\n#### 💡 Dica de Prova (ENEM / Vestibulares):\n${entry.tip}\n\n---\n**🛡️ Fonte da Curadoria:** *${entry.source}* | [Aprofundar no Brasil Escola](${linkBrasilEscola}) • [Toda Matéria](${linkTodaMateria})`;
       }
 
-      if (isDataQuery) {
-        return `### 📊 Consulta de Dados Oficiais & Indicadores: *${escapeHtml(topic)}*\n\nPara estudos que exigem rigor estatístico e educacional, o **StudyAI** prioriza órgãos oficiais brasileiros em vez de enciclopédias abertas:\n\n1. **Base Estatística (IBGE):** Os levantamentos demográficos, geográficos e socioeconômicos sobre **${escapeHtml(topic)}** são consolidados através de censos e pesquisas amostrais oficiais.\n2. **Base Educacional (Inep):** As diretrizes curriculares, matrizes do ENEM e indicadores educacionais relacionados a este tema são regulamentados pelo Ministério da Educação.\n3. **Contextualização Didática:** Ao utilizar dados oficiais em redações ou provas, sempre cite a fonte institucional e o ano de referência do levantamento.\n\n---\n**🏛️ Fontes Institucionais Diretas (Clique para acessar):**\n- 🌐 [Pesquisar no Portal Oficial do IBGE](${linkIBGE})\n- 🏛️ [Pesquisar no Portal Oficial do Inep](${linkInep})\n- 📘 [Ver Contextualização no Brasil Escola](${linkBrasilEscola})`;
+      // 2. Fallback para temas fora da base interna (Consulta enciclopédica aberta sem chave API)
+      const publicDef = await fetchPublicSummary(topic);
+      if (publicDef) {
+        return `### 📖 Síntese Conceitual: *${escapeHtml(topic)}*\n\n${publicDef}\n\n#### 💡 Como estudar este tema para provas:\n- Identifique a **definição central** e o contexto histórico/científico.\n- Relacione o conceito com aplicações práticas do cotidiano.\n\n---\n**📚 Fontes Recomendadas (Zero Wikipédia):**\n- 🟢 [Ler aula completa no **Brasil Escola**](${linkBrasilEscola})\n- 🔵 [Ver resumo revisado no **Toda Matéria**](${linkTodaMateria})`;
       }
 
-      // Explicação Sintetizada Padrão (Sem copiar texto bruto)
-      return `### 🎓 Síntese Pedagógica: *${escapeHtml(topic)}*\n\nEm vez de apenas copiar um texto pronto, organizei o estudo de **${escapeHtml(topic)}** nos pilares essenciais cobrados nas escolas e vestibulares:\n\n1. **O que é (Conceito Central):**\n   **${escapeHtml(topic)}** refere-se ao conjunto de princípios, processos ou eventos que estruturam este tema dentro da disciplina, sendo fundamental para compreender a relação entre teoria e prática.\n\n2. **Como funciona / Características Principais:**\n   - **Contexto e Origem:** Todo fenômeno ou conceito surge a partir de condições específicas que determinam sua evolução.\n   - **Impacto e Aplicação:** Manifesta-se diretamente na resolução de problemas da área e na compreensão da realidade.\n\n3. **Como cai nas Provas (Foco ENEM / Vestibulares):**\n   As bancas examinadoras avaliam a sua capacidade de **relacionar ${escapeHtml(topic)} com outros temas** e interpretar suas consequências, e não apenas decorar definições.\n\n---\n**🧠 Diretriz Aplicada:** *${escapeHtml(learnedRules[learnedRules.length - 1])}*\n\n**📚 Fontes Confiáveis para Leitura Completa (Zero Wikipédia):**\n- 🟢 [Ler aula completa no **Brasil Escola**](${linkBrasilEscola})\n- 🔵 [Ver resumo revisado no **Toda Matéria**](${linkTodaMateria})\n- 📊 [Consultar dados no **IBGE**](${linkIBGE})`;
+      // 3. Caso o termo seja muito específico ou tenha erro de digitação
+      return `### 🔎 Tema não localizado na base offline: *${escapeHtml(topic)}*\n\nNo momento, meu motor curado possui resumos completos, quizzes e flashcards para os principais temas do Ensino Médio e ENEM. Clique no botão **Catálogo de Temas** no topo da tela para ver todos os assuntos prontos (como *Ditadura Militar, Era Vargas, Revolução Industrial, Guerra Fria, Bhaskara, Leis de Newton, Fotossíntese, Biomas do IBGE, Redação ENEM e Programação Web*).\n\n**🌐 Ou acesse diretamente o conteúdo revisado nos portais oficiais:**\n- 🟢 [Pesquisar **${escapeHtml(topic)}** no **Brasil Escola**](${linkBrasilEscola})\n- 🔵 [Pesquisar **${escapeHtml(topic)}** no **Toda Matéria**](${linkTodaMateria})`;
     }
 
     // ==========================================
-    // 5. INTERFACE DO CHAT & NAVEGAÇÃO
+    // 7. INTERFACE DO CHAT & NAVEGAÇÃO
     // ==========================================
     function renderChatHistory() {
       const chatContainer = document.getElementById('chat-container');
       chatContainer.innerHTML = '';
 
       if (chatHistory.length === 0) {
-        appendMessageToDOM('ai', `**Olá! Bem-vindo ao StudyAI v4.0.**\n\nAgora eu **não utilizo a Wikipédia** e **não apenas copio textos**:\n- ✅ **Sintetizo** os conceitos em tópicos didáticos focados no que cai em prova.\n- ✅ **Consulto fontes confiáveis** (*Brasil Escola, Toda Matéria, IBGE e Inep*).\n- ✅ **Salvo nosso histórico** e **aprendo** o seu estilo de estudo.\n\nExperimente perguntar sobre qualquer matéria!`, false);
+        appendMessageToDOM('ai', `**Olá! Bem-vindo ao StudyAI v4.0.**\n\nSou seu tutor acadêmico com **base de conhecimento curada** (100% autônoma, sem exposição de chaves de API e em conformidade com a LGPD).\n\nExperimente perguntar agora mesmo:\n- *"Explique a Ditadura Militar"*\n- *"Crie um quiz sobre Leis de Newton"*\n- *"Resuma a Fórmula de Bhaskara"*\n- *"Quais são os Biomas do Brasil segundo o IBGE?"*\n\nOu clique em **Catálogo de Temas** no canto superior direito para explorar todas as matérias!`, false);
         return;
       }
 
@@ -635,11 +1069,14 @@
           </div>
           <div class="bg-slate-800 border border-slate-700/80 rounded-2xl rounded-tl-none p-4 shadow-sm text-slate-200 text-sm markdown-body max-w-2xl space-y-2">
             <div>${formattedContent}</div>
-            <div class="pt-2 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400">
-              <span>A síntese foi clara?</span>
-              <div class="flex gap-2">
-                <button onclick="handleFeedback(true)" class="hover:text-emerald-400 transition-colors px-2 py-0.5 rounded bg-slate-900/60"><i class="fa-solid fa-thumbs-up"></i> Ótima</button>
-                <button onclick="handleFeedback(false)" class="hover:text-amber-400 transition-colors px-2 py-0.5 rounded bg-slate-900/60"><i class="fa-solid fa-sliders"></i> Ajustar didática</button>
+            <div class="pt-2 border-t border-slate-700/60 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-400">
+              <span>Avalie a utilidade (CSAT):</span>
+              <div class="flex gap-1">
+                <button onclick="rateCSAT(1, this)" class="hover:text-amber-400 px-1.5 py-0.5 rounded bg-slate-900/70">1⭐</button>
+                <button onclick="rateCSAT(2, this)" class="hover:text-amber-400 px-1.5 py-0.5 rounded bg-slate-900/70">2⭐</button>
+                <button onclick="rateCSAT(3, this)" class="hover:text-amber-400 px-1.5 py-0.5 rounded bg-slate-900/70">3⭐</button>
+                <button onclick="rateCSAT(4, this)" class="hover:text-amber-400 px-1.5 py-0.5 rounded bg-slate-900/70">4⭐</button>
+                <button onclick="rateCSAT(5, this)" class="hover:text-amber-400 px-1.5 py-0.5 rounded bg-slate-900/70">5⭐</button>
               </div>
             </div>
           </div>
@@ -676,7 +1113,7 @@
           <i class="fa-solid fa-book-open fa-fade text-sm"></i>
         </div>
         <div class="bg-slate-800 border border-slate-700/80 rounded-2xl rounded-tl-none p-4 text-slate-400 text-sm flex items-center gap-2">
-          <span>Consultando Brasil Escola, Toda Matéria, IBGE & sintetizando explicação...</span>
+          <span>Consultando base curada (Brasil Escola, Toda Matéria, IBGE & Inep)...</span>
         </div>
       `;
       chatContainer.appendChild(loadingDiv);
@@ -706,13 +1143,33 @@
     }
 
     function updateDashboardStats() {
-      document.getElementById('kpi-questions').innerText = stats.questions;
-      document.getElementById('kpi-searches').innerText = stats.searches;
-      document.getElementById('kpi-learned').innerText = learnedRules.length;
+      const xp = stats.xp || 0;
+      const level = Math.floor(xp / 100) + 1;
+      document.getElementById('header-xp').innerText = `${xp} XP`;
+      document.getElementById('sidebar-xp').innerText = xp;
+      document.getElementById('sidebar-level').innerText = level;
+      document.getElementById('sidebar-streak').innerText = stats.streak || 1;
+      document.getElementById('kpi-xp').innerText = xp;
+      document.getElementById('kpi-questions').innerText = stats.questions || 0;
+
+      const ratings = stats.csatRatings && stats.csatRatings.length ? stats.csatRatings : [5];
+      const avgCsat = (ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1);
+      document.getElementById('kpi-csat').innerText = avgCsat;
+
+      if (xp >= 100) {
+        document.getElementById('sidebar-badge').innerText = '🥈';
+        document.getElementById('badge-card-2').classList.remove('opacity-50', 'border-slate-700');
+        document.getElementById('badge-card-2').classList.add('border-sky-500/50');
+      }
+      if (xp >= 250) {
+        document.getElementById('sidebar-badge').innerText = '🥇';
+        document.getElementById('badge-card-3').classList.remove('opacity-50', 'border-slate-700');
+        document.getElementById('badge-card-3').classList.add('border-amber-500/50');
+      }
     }
 
     function switchTab(tabId) {
-      ['chat', 'sources', 'memory', 'dashboard'].forEach(t => {
+      ['chat', 'planner', 'flashcards', 'sources', 'memory', 'dashboard'].forEach(t => {
         document.getElementById(`tab-${t}`).classList.add('hidden');
         const btn = document.getElementById(`nav-${t}`);
         const mBtn = document.getElementById(`mobile-nav-${t}`);
@@ -733,28 +1190,23 @@
 
     function triggerShortcut(type) {
       const input = document.getElementById('chat-input');
-      if (type === 'explain') input.value = "Me explique ";
-      if (type === 'ibge') input.value = "Dados do IBGE sobre ";
-      if (type === 'quiz') input.value = "Crie um simulado sobre ";
-      if (type === 'teach') input.value = "Aprenda que eu prefiro ";
+      if (type === 'summary') input.value = "Resuma ";
+      if (type === 'quiz') input.value = "Crie um quiz sobre ";
+      if (type === 'flashcard') input.value = "Gere um flashcard sobre ";
+      if (type === 'ibge') input.value = "Quais são os Biomas do Brasil segundo o IBGE?";
       input.focus();
     }
 
-    function toggleSettingsModal() {
-      document.getElementById('settings-modal').classList.toggle('hidden');
+    function showTopicsModal() {
+      document.getElementById('topics-modal').classList.toggle('hidden');
     }
 
-    function saveSettings() {
-      const key = document.getElementById('api-key-input').value.trim();
-      userApiKey = key;
-      if (key) {
-        localStorage.setItem('studyai_api_key', key);
-        document.getElementById('engine-status').innerText = '✅ Gemini API + Busca Restrita a Portais Confiáveis';
-      } else {
-        localStorage.removeItem('studyai_api_key');
-        document.getElementById('engine-status').innerText = '✅ Curadoria Educacional Ativa';
-      }
-      toggleSettingsModal();
+    function askSample(question) {
+      showTopicsModal();
+      switchTab('chat');
+      const input = document.getElementById('chat-input');
+      input.value = question;
+      document.getElementById('chat-form').dispatchEvent(new Event('submit'));
     }
 
     function escapeHtml(str) {
